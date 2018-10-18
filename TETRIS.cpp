@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int tetris[19][19];
+int tetris[30][30];
 
 void GotoXY( int x, int y ) //Hàm di chuyển con trỏ console
     {
@@ -38,7 +38,7 @@ void PrintArray(int x, int y) //In mảng bắt đầu từ vị trí có toạ 
                 else if (tetris[i][j] = 1) cout << "O"; //Tạm hiển thị là "O"
             }
             cout << "\n";
-            GotoXY(x, y + 1);
+            GotoXY(x, y++);
         }
 }
 
@@ -85,5 +85,7 @@ int CheckFullRow()
 
 int main(void)
 {
-    PrintArray(2, 2);
+    ArrayReset();
+	PrintArray(2, 2);
+	cin.get();
 }
