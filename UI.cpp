@@ -147,17 +147,16 @@ void first_ui(int)
     for(int i = 1; i <= 41; ++i)
         cout << char(205);
     cout << char(188) << endl;
-
+    Sleep(1500);
     //ham tra con tro ve vi tri ghi chu "press any key to continue"
     COORD p = { 8,15 };
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), p );
 
-	//ham lam nhap nhay dong chu "press any key to continue"
-    Sleep(3000);
+    //ham lam nhap nhay dong chu "press any key to continue"
     cout << "Press any key to continue";
     Sleep(500);
-    for(int i = 0; i < 10; i++)
-    {
+
+    while(!kbhit()) {
         SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), p );
         for(int j = 1; j <= 25; j++)
             cout << " ";
@@ -165,7 +164,9 @@ void first_ui(int)
         Sleep(500);
         cout << "Press any key to continue";
         Sleep(500);
+
     }
+
 }
 
 void second_ui(int)
@@ -212,7 +213,7 @@ int main()
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
 
     first_ui(1);
-    getch();
     second_ui(1);
+    getch();
     return 0;
 }
