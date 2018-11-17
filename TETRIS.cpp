@@ -5,10 +5,10 @@
 //============================================================
 
 #include <iostream>
-#include "windows.h"
+#include <windows.h>
 #include <cstdlib>
 #include <ctime>
-#include "conio.h"
+#include <conio.h>
 
 //============================================================
 
@@ -167,6 +167,7 @@ int main()
     {
         key = getch();
         ASCIIValue = key;
+		ArrayReset();
         if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
 		if (NewTetro)
 		{
@@ -176,5 +177,5 @@ int main()
 		BlockI(tetrominoLocX, tetrominoLocY);
 		PrintArray(0, 0);
 	}
-	cin.get();
+	//cin.get();
 }
