@@ -1,14 +1,74 @@
 #include <iostream>
 #include <windows.h>
+#include <cstdlib>
+#include <ctime>
+
+//============================================================
 
 using namespace std;
 
-int tetris[30][30];
+//============================================================
 
-void GotoXY( int x, int y ) //Hàm di chuyển con trỏ console
+int tetris[30][30]; //Khai báo mảng
+
+int tetrominoLocX = 0, tetrominoLocY = 0;
+int DelayTime = 10, count = 0;
+
+//============================================================
+
+//Hàm vẽ các Tetromino
+
+void BlockI(int x, int y)
+{
+	tetris[x][y] = 1;
+	tetris[x - 1][y] = 1;
+	tetris[x + 1][y] = 1;
+	tetris[x + 2][y] = 1;
+}
+
+void MoveBlockILeft(int x, int y)
+{
+	if (((x - 2) > 2) || ((x - 1) > 2))
+	{
+		tetris[x - 2][y] = tetris[x - 1][y];
+		tetris[x - 1][y] = tetris[x][y];
+		tetris[x][y] = tetris[x + 1][y];
+		tetris[x + 1][y] = tetris[x + 2][y];
+		tetris[x - 1][y - 1] = tetris[x][y - 1];
+		tetris[x - 1][y + 1] = tetris[x][y + 1];
+		tetris[x - 1][y + 2] = tetris[x][y + 2];
+
+		tetris[x + 2][y] = 0;
+		tetris[x][y - 1] = 0;
+		tetris[x][y + 1] = 0;
+		tetris[x][y + 2] = 0;
+
+		tetrominoLocX = x - 1;
+		tetrominoLocY = y;
+}
+//============================================================
+
+bool CheckDrop() //Check whether tetrominoes should be dropped or not
+{
+	if (count == DelayTime) return true;
+	else
+	{
+		count++;
+		return false;
+	}
+}
+	
+int Random() //Generate a random number
+{
+	srand((int)time(0));
+	int r = (rand() % 10) + 1;
+	return r;
+}
+	
+void GotoXY(int x, int y) //Hàm di chuyển con trỏ console
     {
-    COORD p = { x, y };
-    SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), p );
+		COORD p = {x, y};
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
     }
 
 void NoCursorType() //Hàm ẩn con trỏ console
@@ -33,7 +93,7 @@ void PrintArray(int x, int y) //In mảng bắt đầu từ vị trí có toạ 
         {
             for (int j = 0; j <= 19; j++)
             {
-                if (tetris[i][j] = 0) cout << "T"; //Tạm hiển thị là "T"
+                if (tetris[i][j] == 0) cout << "T"; //Tạm hiển thị là "T"
                 else if (tetris[i][j] = -1) cout << "A"; //Tạm hiển thị là "A"
                 else if (tetris[i][j] = 1) cout << "O"; //Tạm hiển thị là "O"
             }
