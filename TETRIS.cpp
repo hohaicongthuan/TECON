@@ -1,7 +1,14 @@
+// TETRIS GAME BY CONG THUAN HO HAI & KIEU TRANG HA
+// Well's size (Matrix size) 20 x 20
+// 100% console interface
+
+//============================================================
+
 #include <iostream>
-#include <windows.h>
+#include "windows.h"
 #include <cstdlib>
 #include <ctime>
+#include "conio.h"
 
 //============================================================
 
@@ -9,14 +16,17 @@ using namespace std;
 
 //============================================================
 
-int tetris[30][30]; //Khai báo mảng
+int tetris[30][30]; // Khai báo mảng
 
 int tetrominoLocX = 0, tetrominoLocY = 0;
 int DelayTime = 10, count = 0;
+char key;
+int ASCIIValue;
+bool NewTetromino = false;
 
 //============================================================
 
-//Hàm vẽ các Tetromino
+// Hàm vẽ các Tetromino
 
 void BlockI(int x, int y)
 {
@@ -45,10 +55,11 @@ void MoveBlockILeft(int x, int y)
 
 		tetrominoLocX = x - 1;
 		tetrominoLocY = y;
+	}
 }
 //============================================================
 
-bool CheckDrop() //Check whether tetrominoes should be dropped or not
+bool CheckDrop() // Check whether tetrominoes should be dropped or not
 {
 	if (count == DelayTime) return true;
 	else
@@ -57,21 +68,27 @@ bool CheckDrop() //Check whether tetrominoes should be dropped or not
 		return false;
 	}
 }
-	
-int Random() //Generate a random number
+
+bool NewTetro() // Check whether a new tetromino should be generated
+{
+	if (tetrominoLocY >= 23) return true;
+	else return false;
+}
+
+int Random() // Generate a random number
 {
 	srand((int)time(0));
-	int r = (rand() % 10) + 1;
+	int r = (rand() % 19) + 1;
 	return r;
 }
-	
-void GotoXY(int x, int y) //Hàm di chuyển con trỏ console
-    {
-		COORD p = {x, y};
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
-    }
 
-void NoCursorType() //Hàm ẩn con trỏ console
+void GotoXY(int x, int y) // Hàm di chuyển con trỏ console
+{
+	COORD p = {x, y};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
+}
+
+void NoCursorType() // Hàm ẩn con trỏ console
 {
 	CONSOLE_CURSOR_INFO Info;
 	Info.bVisible = FALSE;
@@ -86,25 +103,25 @@ void ArrayReset()
             tetris[i][j] = 0;
 }
 
-void PrintArray(int x, int y) //In mảng bắt đầu từ vị trí có toạ độ (x, y)
+void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ độ (x, y)
 {
     GotoXY(x, y);
     for (int i = 0; i <= 19; i++)
         {
             for (int j = 0; j <= 19; j++)
             {
-                if (tetris[i][j] == 0) cout << "T"; //Tạm hiển thị là "T"
-                else if (tetris[i][j] = -1) cout << "A"; //Tạm hiển thị là "A"
-                else if (tetris[i][j] = 1) cout << "O"; //Tạm hiển thị là "O"
+                if (tetris[i][j] == 0) cout << "T"; // Tạm hiển thị là "T"
+                else if (tetris[i][j] = -1) cout << "A"; // Tạm hiển thị là "A"
+                else if (tetris[i][j] = 1) cout << "O"; // Tạm hiển thị là "O"
             }
             cout << "\n";
             GotoXY(x, y++);
         }
 }
 
-//Check full rows
-//and delete full rows
-//and return a value of deleted rows
+// Check full rows
+// and delete full rows
+// and return a value of deleted rows
 
 void DeleteRow(int n)
 {
@@ -143,9 +160,21 @@ int CheckFullRow()
     return FullRow;
 }
 
-int main(void)
+int main()
 {
     ArrayReset();
-	PrintArray(2, 2);
+	while (1) // Infinite loop
+    {
+        key = getch();
+        ASCIIValue = key;
+        if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
+		if (NewTetro)
+		{
+			tetrominoLocX = Random();
+			tetrominoLocY = Random();
+		}
+		BlockI(tetrominoLocX, tetrominoLocY);
+		PrintArray(0, 0);
+	}
 	cin.get();
 }
