@@ -18,6 +18,7 @@ using namespace std;
 
 int tetris[30][30]; // Khai báo mảng
 
+int Score = 0, HighScore = 0;
 int tetrominoLocX = 0, tetrominoLocY = 0;
 int DelayTime = 10, count = 0;
 char key;
@@ -31,9 +32,9 @@ bool NewTetromino = false;
 void BlockI(int x, int y)
 {
 	tetris[x][y] = 1;
-	tetris[x][y - 1] = 1;
-	tetris[x][y + 1] = 1;
-	tetris[x][y + 2] = 1;
+	tetris[x - 1][y] = 1;
+	tetris[x + 1][y] = 1;
+	tetris[x + 2][y] = 1;
 }
 
 void MoveBlockILeft(int x, int y)
@@ -61,17 +62,17 @@ void MoveBlockILeft(int x, int y)
 void BlockJ(int x, int y)
 {
 	tetris[x][y] = 1;
-	tetris[x][y - 1] = 1;
-	tetris[x][y + 1] = 1;
+	tetris[x - 1][y] = 1;
+	tetris[x + 1][y] = 1;
 	tetris[x + 1][y + 1] = 1;
 }
 
 void BlockL(int x, int y)
 {
 	tetris[x][y] = 1;
-	tetris[x][y - 1] = 1;
-	tetris[x][y + 1] = 1;
-	tetris[x + 1][y - 1] = 1;
+	tetris[x - 1][y] = 1;
+	tetris[x + 1][y] = 1;
+	tetris[x - 1][y + 1] = 1;
 }
 
 void BlockO(int x, int y)
@@ -85,24 +86,24 @@ void BlockO(int x, int y)
 void BlockS(int x, int y)
 {
 	tetris[x][y] = 1;
-	tetris[x][y + 1] = 1;
 	tetris[x + 1][y] = 1;
-	tetris[x + 1][y - 1] = 1;
+	tetris[x][y + 1] = 1;
+	tetris[x - 1][y + 1] = 1;
 }
 
 void BlockT(int x, int y)
 {
 	tetris[x][y] = 1;
-	tetris[x][y - 1] = 1;
-	tetris[x][y + 1] = 1;
+	tetris[x - 1][y] = 1;
 	tetris[x + 1][y] = 1;
+	tetris[x][y + 1] = 1;
 }
 
 void BlockZ(int x, int y)
 {
 	tetris[x][y] = 1;
-	tetris[x][y - 1] = 1;
-	tetris[x + 1][y] = 1;
+	tetris[x - 1][y] = 1;
+	tetris[x][y + 1] = 1;
 	tetris[x + 1][y + 1] = 1;
 }
 
@@ -159,9 +160,9 @@ void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ
         {
             for (int j = 0; j <= 19; j++)
             {
-                if (tetris[i][j] == 0) cout << "T"; // Tạm hiển thị là "T"
-                else if (tetris[i][j] = -1) cout << "A"; // Tạm hiển thị là "A"
-                else if (tetris[i][j] = 1) cout << "O"; // Tạm hiển thị là "O"
+                if (tetris[j][i] == 0) cout << "T"; // Tạm hiển thị là "T"
+                else if (tetris[j][i] = -1) cout << "A"; // Tạm hiển thị là "A"
+                else if (tetris[j][i] = 1) cout << "O"; // Tạm hiển thị là "O"
             }
             cout << "\n";
             GotoXY(x, y++);
