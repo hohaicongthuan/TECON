@@ -23,7 +23,7 @@ int Score = 0, HighScore = 0,
 	DelayTime = 10, count = 0,
 	ASCIIValue;
 
-char key;
+char key, CurrentState = "";
 
 bool NewTetromino = false;
 
@@ -89,29 +89,7 @@ void BlockZ(int x, int y)
 
 //============================================================
 
-// Hàm di chuyển các tetromino
 
-void MoveBlockILeft(int x, int y)
-{
-	if (((x - 2) > 2) || ((x - 1) > 2))
-	{
-		tetris[x - 2][y] = tetris[x - 1][y];
-		tetris[x - 1][y] = tetris[x][y];
-		tetris[x][y] = tetris[x + 1][y];
-		tetris[x + 1][y] = tetris[x + 2][y];
-		tetris[x - 1][y - 1] = tetris[x][y - 1];
-		tetris[x - 1][y + 1] = tetris[x][y + 1];
-		tetris[x - 1][y + 2] = tetris[x][y + 2];
-
-		tetris[x + 2][y] = 0;
-		tetris[x][y - 1] = 0;
-		tetris[x][y + 1] = 0;
-		tetris[x][y + 2] = 0;
-
-		tetrominoLocX = x - 1;
-		tetrominoLocY = y;
-	}
-}
 
 //============================================================
 
@@ -134,7 +112,7 @@ bool NewTetro() // Check whether a new tetromino should be generated
 int Random() // Generate a random number
 {
 	srand((int)time(0));
-	int r = (rand() % (20 - 3 + 1)) + 3;
+	int r = (rand() % (17)) + 5;
 	return r;
 }
 
@@ -156,7 +134,7 @@ void ArrayReset()
 {
     for (int i = 0; i <= 30; i++)
         for (int j = 0; j <= 30; j++)
-            tetris[i][j] = 0;
+            tetris[j][i] = 0;
 }
 
 void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ độ (x, y)
@@ -228,13 +206,10 @@ int main()
 			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
 		}
 		ArrayReset();
-		if (NewTetro)
-		{
-			tetrominoLocX = Random();
-			tetrominoLocY = 10;
-		}
+		tetrominoLocX = Random();
+		tetrominoLocY = 12;
 		BlockZ(tetrominoLocX, tetrominoLocY);
-		PrintArray(2, 2);
+		PrintArray(0, 0);
 	}
 	//cin.get();
 }
