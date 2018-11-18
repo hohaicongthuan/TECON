@@ -31,9 +31,9 @@ bool NewTetromino = false;
 void BlockI(int x, int y)
 {
 	tetris[x][y] = 1;
-	tetris[x - 1][y] = 1;
-	tetris[x + 1][y] = 1;
-	tetris[x + 2][y] = 1;
+	tetris[x][y - 1] = 1;
+	tetris[x][y + 1] = 1;
+	tetris[x][y + 2] = 1;
 }
 
 void MoveBlockILeft(int x, int y)
@@ -57,6 +57,55 @@ void MoveBlockILeft(int x, int y)
 		tetrominoLocY = y;
 	}
 }
+
+void BlockJ(int x, int y)
+{
+	tetris[x][y] = 1;
+	tetris[x][y - 1] = 1;
+	tetris[x][y + 1] = 1;
+	tetris[x + 1][y + 1] = 1;
+}
+
+void BlockL(int x, int y)
+{
+	tetris[x][y] = 1;
+	tetris[x][y - 1] = 1;
+	tetris[x][y + 1] = 1;
+	tetris[x + 1][y - 1] = 1;
+}
+
+void BlockO(int x, int y)
+{
+	tetris[x][y] = 1;
+	tetris[x + 1][y] = 1;
+	tetris[x][y + 1] = 1;
+	tetris[x + 1][y + 1] = 1;
+}
+
+void BlockS(int x, int y)
+{
+	tetris[x][y] = 1;
+	tetris[x][y + 1] = 1;
+	tetris[x + 1][y] = 1;
+	tetris[x + 1][y - 1] = 1;
+}
+
+void BlockT(int x, int y)
+{
+	tetris[x][y] = 1;
+	tetris[x][y - 1] = 1;
+	tetris[x][y + 1] = 1;
+	tetris[x + 1][y] = 1;
+}
+
+void BlockZ(int x, int y)
+{
+	tetris[x][y] = 1;
+	tetris[x][y - 1] = 1;
+	tetris[x + 1][y] = 1;
+	tetris[x + 1][y + 1] = 1;
+}
+
 //============================================================
 
 bool CheckDrop() // Check whether tetrominoes should be dropped or not
@@ -98,8 +147,8 @@ void NoCursorType() // Hàm ẩn con trỏ console
 
 void ArrayReset()
 {
-    for (int i = 0; i <= 19; i++)
-        for (int j = 0; j <= 19; j++)
+    for (int i = 0; i <= 30; i++)
+        for (int j = 0; j <= 30; j++)
             tetris[i][j] = 0;
 }
 
@@ -165,17 +214,20 @@ int main()
     ArrayReset();
 	while (1) // Infinite loop
     {
-        key = getch();
-        ASCIIValue = key;
+        if (kbhit()) // Function that checks keys are pressed or not
+		{
+			key = getche();
+			ASCIIValue = key;
+			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
+		}
 		ArrayReset();
-        if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
 		if (NewTetro)
 		{
 			tetrominoLocX = Random();
 			tetrominoLocY = Random();
 		}
-		BlockI(tetrominoLocX, tetrominoLocY);
-		PrintArray(0, 0);
+		BlockZ(tetrominoLocX, tetrominoLocY);
+		PrintArray(2, 2);
 	}
 	//cin.get();
 }
