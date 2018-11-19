@@ -9,7 +9,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <conio.h>
-#include <string>
 
 //============================================================
 
@@ -24,9 +23,32 @@ int Score = 0, HighScore = 0,
 	DelayTime = 10, count = 0,
 	ASCIIValue;
 
-char key;
+unsigned short int CurrentState = 0;
 
-string CurrentState = "";
+// Quy ước các trạng thái của tetrominoes
+// Vì "switch... case" không hỗ trợ dữ liệu chuỗi
+// nên đành phải quy ước thành số nguyên
+
+	// 'I1' = 1
+	// 'I2' = 2
+	// 'J1' = 3
+	// 'J2' = 4
+	// 'J3' = 5
+	// 'J4' = 6
+	// 'L1' = 7
+	// 'L2' = 8
+	// 'L3' = 9
+	// 'L4' = 10
+	// 'S1' = 11
+	// 'S2' = 12
+	// 'T1' = 13
+	// 'T2' = 14
+	// 'T3' = 15
+	// 'T4' = 16
+	// 'Z1' = 17
+	// 'Z2' = 18
+
+char key;
 
 bool NewTetromino = false;
 
@@ -41,7 +63,7 @@ void BlockI1(int x, int y)
 	tetris[x + 1][y] = 1;
 	tetris[x + 2][y] = 1;
 
-	CurrentState = "I1";
+	CurrentState = 1;
 }
 
 void BlockJ1(int x, int y)
@@ -51,7 +73,7 @@ void BlockJ1(int x, int y)
 	tetris[x + 1][y] = 1;
 	tetris[x + 1][y + 1] = 1;
 
-	CurrentState = "J1";
+	CurrentState = 3;
 }
 
 void BlockL1(int x, int y)
@@ -61,7 +83,7 @@ void BlockL1(int x, int y)
 	tetris[x + 1][y] = 1;
 	tetris[x - 1][y + 1] = 1;
 
-	CurrentState = "L1";
+	CurrentState = 7;
 }
 
 void BlockO(int x, int y)
@@ -71,7 +93,7 @@ void BlockO(int x, int y)
 	tetris[x][y + 1] = 1;
 	tetris[x + 1][y + 1] = 1;
 
-	CurrentState = "";
+	CurrentState = 0;
 }
 
 void BlockS1(int x, int y)
@@ -81,7 +103,7 @@ void BlockS1(int x, int y)
 	tetris[x][y + 1] = 1;
 	tetris[x - 1][y + 1] = 1;
 
-	CurrentState = "S1";
+	CurrentState = 11;
 }
 
 void BlockT1(int x, int y)
@@ -91,7 +113,7 @@ void BlockT1(int x, int y)
 	tetris[x + 1][y] = 1;
 	tetris[x][y + 1] = 1;
 
-	CurrentState = "T1";
+	CurrentState = 13;
 }
 
 void BlockZ1(int x, int y)
@@ -101,7 +123,7 @@ void BlockZ1(int x, int y)
 	tetris[x][y + 1] = 1;
 	tetris[x + 1][y + 1] = 1;
 
-	CurrentState = "Z1";
+	CurrentState = 17;
 }
 
 //============================================================
@@ -229,24 +251,24 @@ int main()
 		PrintArray(0, 0);
 		switch (CurrentState)
 		{
-			case 'I1': CurrentState = "I2";
-			case 'I2': CurrentState = "I1";
-			case 'J1': CurrentState = "J2";
-			case 'J2': CurrentState = "J3";
-			case 'J3': CurrentState = "J4";
-			case 'J4': CurrentState = "J1";
-			case 'L1': CurrentState = "L2";
-			case 'L2': CurrentState = "L3";
-			case 'L3': CurrentState = "L4";
-			case 'L4': CurrentState = "L1";
-			case 'S1': CurrentState = "S2";
-			case 'S2': CurrentState = "S1";
-			case 'T1': CurrentState = "T2";
-			case 'T2': CurrentState = "T3";
-			case 'T3': CurrentState = "T4";
-			case 'T4': CurrentState = "T1";
-			case 'Z1': CurrentState = "Z2";
-			case 'Z2': CurrentState = "Z1";
+			case 1: CurrentState = 2;
+			case 2: CurrentState = 1;
+			case 3: CurrentState = 4;
+			case 4: CurrentState = 5;
+			case 5: CurrentState = 6;
+			case 6: CurrentState = 3;
+			case 7: CurrentState = 8;
+			case 8: CurrentState = 9;
+			case 9: CurrentState = 10;
+			case 10: CurrentState = 7;
+			case 11: CurrentState = 12;
+			case 12: CurrentState = 11;
+			case 13: CurrentState = 14;
+			case 14: CurrentState = 15;
+			case 15: CurrentState = 16;
+			case 16: CurrentState = 13;
+			case 17: CurrentState = 18;
+			case 18: CurrentState = 17;
 		}
 	}
 	//cin.get();
