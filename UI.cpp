@@ -5,10 +5,14 @@
 
 using namespace std;
 
+void gotoxy(int x,int y);
 void first_ui(int);
 void first_ui_black(int);
 void second_ui(int);
 char a[50][50];
+int menu(int);
+
+//giao dien welcome
 void first_ui(int)
 {
     //hàng đầu tiên
@@ -169,6 +173,7 @@ void first_ui(int)
 
 }
 
+//giao dien menu
 void second_ui(int)
 {
     system("cls");
@@ -202,6 +207,24 @@ void second_ui(int)
     for(int i = 1; i <= 20; ++i)
         cout << char(205);
     cout << char(188) << endl;
+
+    //cac option trong menu
+    gotoxy(7,6);
+    cout << "New game";
+    gotoxy(7,9);
+    cout << "Help";
+    gotoxy(7,12);
+    cout << "Credit";
+    gotoxy(7,15);
+    cout << "Exit";
+}
+
+//ham gotoxy
+void gotoxy(int x,int y)
+{
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE) ;
+    COORD position = {x,y} ;
+    SetConsoleCursorPosition(hStdout,position ) ;
 }
 
 int main()
@@ -215,5 +238,6 @@ int main()
     first_ui(1);
     second_ui(1);
     getch();
+    gotoxy(0,22);
     return 0;
 }
