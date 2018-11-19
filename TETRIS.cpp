@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <conio.h>
+#include <string>
 
 //============================================================
 
@@ -23,7 +24,9 @@ int Score = 0, HighScore = 0,
 	DelayTime = 10, count = 0,
 	ASCIIValue;
 
-char key, CurrentState = "";
+char key;
+
+string CurrentState = "";
 
 bool NewTetromino = false;
 
@@ -31,28 +34,34 @@ bool NewTetromino = false;
 
 // Hàm vẽ các Tetromino
 
-void BlockI(int x, int y)
+void BlockI1(int x, int y)
 {
 	tetris[x][y] = 1;
 	tetris[x - 1][y] = 1;
 	tetris[x + 1][y] = 1;
 	tetris[x + 2][y] = 1;
+
+	CurrentState = "I1";
 }
 
-void BlockJ(int x, int y)
+void BlockJ1(int x, int y)
 {
 	tetris[x][y] = 1;
 	tetris[x - 1][y] = 1;
 	tetris[x + 1][y] = 1;
 	tetris[x + 1][y + 1] = 1;
+
+	CurrentState = "J1";
 }
 
-void BlockL(int x, int y)
+void BlockL1(int x, int y)
 {
 	tetris[x][y] = 1;
 	tetris[x - 1][y] = 1;
 	tetris[x + 1][y] = 1;
 	tetris[x - 1][y + 1] = 1;
+
+	CurrentState = "L1";
 }
 
 void BlockO(int x, int y)
@@ -61,30 +70,38 @@ void BlockO(int x, int y)
 	tetris[x + 1][y] = 1;
 	tetris[x][y + 1] = 1;
 	tetris[x + 1][y + 1] = 1;
+
+	CurrentState = "";
 }
 
-void BlockS(int x, int y)
+void BlockS1(int x, int y)
 {
 	tetris[x][y] = 1;
 	tetris[x + 1][y] = 1;
 	tetris[x][y + 1] = 1;
 	tetris[x - 1][y + 1] = 1;
+
+	CurrentState = "S1";
 }
 
-void BlockT(int x, int y)
+void BlockT1(int x, int y)
 {
 	tetris[x][y] = 1;
 	tetris[x - 1][y] = 1;
 	tetris[x + 1][y] = 1;
 	tetris[x][y + 1] = 1;
+
+	CurrentState = "T1";
 }
 
-void BlockZ(int x, int y)
+void BlockZ1(int x, int y)
 {
 	tetris[x][y] = 1;
 	tetris[x - 1][y] = 1;
 	tetris[x][y + 1] = 1;
 	tetris[x + 1][y + 1] = 1;
+
+	CurrentState = "Z1";
 }
 
 //============================================================
@@ -159,16 +176,16 @@ void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ
 
 void DeleteRow(int n)
 {
-    for (int i = 0; i <= 19; i++) tetris[n][i] = '0';
+    for (int i = 0; i <= 30; i++) tetris[i][n] = '0';
 }
 
 void MoveAllRowAbove(int n)
 {
     for (int i = n; i >= 0; i--)
     {
-        for (int j = 19; j >=0; j--)
+        for (int j = 30; j >=0; j--)
         {
-            tetris[i][j] = tetris[i+1][j];
+            tetris[j][i] = tetris[j][i + 1];
         }
     }
 }
@@ -177,11 +194,11 @@ int CheckFullRow()
 {
     int FullRow;
     bool t = true;
-    for (int i = 19; i >= 0; i--)
+    for (int i = 21; i >= 2; i--)
     {
-        for (int j = 19; j >=0; j--)
+        for (int j = 23; j >=4; j--)
         {
-            if (tetris[i][j] != 1) t = false;
+            if (tetris[j][i] != 1) t = false;
             break;
         }
         if (t)
@@ -201,15 +218,36 @@ int main()
     {
         if (kbhit()) // Function that checks keys are pressed or not
 		{
-			key = getche();
+			key = getch();
 			ASCIIValue = key;
 			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
 		}
 		ArrayReset();
 		tetrominoLocX = Random();
 		tetrominoLocY = 12;
-		BlockZ(tetrominoLocX, tetrominoLocY);
+		BlockZ1(tetrominoLocX, tetrominoLocY);
 		PrintArray(0, 0);
+		switch (CurrentState)
+		{
+			case 'I1': CurrentState = "I2";
+			case 'I2': CurrentState = "I1";
+			case 'J1': CurrentState = "J2";
+			case 'J2': CurrentState = "J3";
+			case 'J3': CurrentState = "J4";
+			case 'J4': CurrentState = "J1";
+			case 'L1': CurrentState = "L2";
+			case 'L2': CurrentState = "L3";
+			case 'L3': CurrentState = "L4";
+			case 'L4': CurrentState = "L1";
+			case 'S1': CurrentState = "S2";
+			case 'S2': CurrentState = "S1";
+			case 'T1': CurrentState = "T2";
+			case 'T2': CurrentState = "T3";
+			case 'T3': CurrentState = "T4";
+			case 'T4': CurrentState = "T1";
+			case 'Z1': CurrentState = "Z2";
+			case 'Z2': CurrentState = "Z1";
+		}
 	}
 	//cin.get();
 }
