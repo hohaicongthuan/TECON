@@ -7,10 +7,17 @@ using namespace std;
 
 void gotoxy(int x,int y);
 void first_ui(int);
-void first_ui_black(int);
 void second_ui(int);
+void khung(int);
 char a[50][50];
-int menu(int);
+
+//ham gotoxy
+void gotoxy(int x,int y)
+{
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE) ;
+    COORD position = {x,y} ;
+    SetConsoleCursorPosition(hStdout,position ) ;
+}
 
 //giao dien welcome
 void first_ui(int)
@@ -219,12 +226,39 @@ void second_ui(int)
     cout << "Exit";
 }
 
-//ham gotoxy
-void gotoxy(int x,int y)
+void khung(int)
 {
-    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE) ;
-    COORD position = {x,y} ;
-    SetConsoleCursorPosition(hStdout,position ) ;
+    system("cls");
+    //hàng đầu tiên
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << char(201);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(203);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(187) << endl;
+
+    //hàng thứ 2 đến hàng thứ 19
+    for(int j = 1; j <= 20; ++j)
+    {
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186) << endl;
+    }
+
+    //hàng cuối cùng
+    cout << char(200);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(202);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(188) << endl;
 }
 
 int main()
