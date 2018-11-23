@@ -19,7 +19,7 @@ using namespace std;
 int tetris[30][30]; // Khai báo mảng
 
 int Score = 0, HighScore = 0,
-	tetrominoLocX = 0, tetrominoLocY = 0,
+	tetrominoLocX = 0, tetrominoLocY = 0, // Tetromino Location X & Y
 	DelayTime = 10, count = 0,
 	ASCIIValue;
 
@@ -41,9 +41,116 @@ unsigned short int CurrentState = 0;
 
 char key;
 
-bool NewTetromino = false;
+bool NewTetromino = true;
 
 //============================================================
+
+
+
+
+
+//============================================================
+
+bool CheckDrop() // Check whether tetrominoes should be dropped or not
+{
+	if (count == DelayTime) return true;
+	else
+	{
+		count++;
+		return false;
+	}
+}
+
+int Random() // Generate a random number
+{
+	srand((int)time(0));
+	int r = (rand() % (19) + 1);
+	return r;
+}
+
+void GotoXY(int x, int y) // Hàm di chuyển con trỏ console
+{
+	COORD p = {x, y};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
+}
+
+void NoCursorType() // Hàm ẩn con trỏ console
+{
+	CONSOLE_CURSOR_INFO Info;
+	Info.bVisible = FALSE;
+	Info.dwSize = 20;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
+}
+
+void ArrayReset()
+{
+    for (int i = 0; i <= 30; i++)
+        for (int j = 0; j <= 30; j++)
+            tetris[j][i] = 0;
+}
+
+void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ độ (x, y)
+{
+    GotoXY(x, y);
+    for (int i = 0; i <= 20; i++)
+        {
+            for (int j = 0; j <= 20; j++)
+            {
+                if (tetris[j][i] == 0) cout << char(176); // Tạm hiển thị là "T"
+                /* else if (tetris[j][i] == -1) cout << "A"; // Tạm hiển thị là "A" */
+                else if (tetris[j][i] == 1) cout << char(178); // Tạm hiển thị là "O"
+            }
+            cout << "\n";
+            GotoXY(x, y++);
+        }
+}
+
+// Check full rows
+// and delete full rows
+// and return a value of deleted rows
+
+void DeleteRow(int n)
+{
+    for (int i = 0; i <= 30; i++) tetris[i][n] = '0';
+}
+
+void MoveAllRowAbove(int n)
+{
+    for (int i = n; i >= 0; i--)
+    {
+        for (int j = 30; j >=0; j--)
+        {
+            tetris[j][i] = tetris[j][i + 1];
+        }
+    }
+}
+
+int CheckFullRow() // Function that checks and returns a number of full rows
+{
+    int FullRow = 0;
+    bool t = true;
+    for (int i = 21; i >= 2; i--)
+    {
+        for (int j = 23; j >=4; j--)
+        {
+            if (tetris[j][i] != 1)
+			{
+				t = false;
+				break;
+			}
+        }
+        if (t)
+        {
+            FullRow++;
+            DeleteRow(i);
+			MoveAllRowAbove(i);
+        }
+        t = true;
+    }
+    return FullRow;
+}
+
+//=============================================================
 
 // Hàm vẽ các Tetromino
 
@@ -89,10 +196,10 @@ void BlockO(int x, int y)
 
 void BlockS1(int x, int y)
 {
-	tetris[x][y] = 1;
-	tetris[x + 1][y] = 1;
-	tetris[x][y + 1] = 1;
-	tetris[x - 1][y + 1] = 1;
+	GotoXY(x, y); cout << char(178);
+	GotoXY(x + 1, y); cout << char(178);
+	GotoXY(x, y + 1); cout << char(178);
+	GotoXY(x - 1, y + 1); cout << char(178);
 
 	CurrentState = 11;
 }
@@ -119,160 +226,85 @@ void BlockZ1(int x, int y)
 
 //============================================================
 
-
-
-//============================================================
-
-bool CheckDrop() // Check whether tetrominoes should be dropped or not
-{
-	if (count == DelayTime) return true;
-	else
-	{
-		count++;
-		return false;
-	}
-}
-
-bool NewTetro() // Check whether a new tetromino should be generated
-{
-	if (tetrominoLocY >= 23) return true;
-	else return false;
-}
-
-int Random() // Generate a random number
-{
-	srand((int)time(0));
-	int r = (rand() % (17)) + 5;
-	return r;
-}
-
-void GotoXY(int x, int y) // Hàm di chuyển con trỏ console
-{
-	COORD p = {x, y};
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
-}
-
-void NoCursorType() // Hàm ẩn con trỏ console
-{
-	CONSOLE_CURSOR_INFO Info;
-	Info.bVisible = FALSE;
-	Info.dwSize = 20;
-	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
-}
-
-void ArrayReset()
-{
-    for (int i = 0; i <= 30; i++)
-        for (int j = 0; j <= 30; j++)
-            tetris[j][i] = 0;
-}
-
-void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ độ (x, y)
-{
-    GotoXY(x, y);
-    for (int i = 2; i <= 21; i++)
-        {
-            for (int j = 4; j <= 23; j++)
-            {
-                if (tetris[j][i] == 0) cout << "T"; // Tạm hiển thị là "T"
-                else if (tetris[j][i] == -1) cout << "A"; // Tạm hiển thị là "A"
-                else if (tetris[j][i] == 1) cout << "O"; // Tạm hiển thị là "O"
-            }
-            cout << "\n";
-            GotoXY(x, y++);
-        }
-}
-
-// Check full rows
-// and delete full rows
-// and return a value of deleted rows
-
-void DeleteRow(int n)
-{
-    for (int i = 0; i <= 30; i++) tetris[i][n] = '0';
-}
-
-void MoveAllRowAbove(int n)
-{
-    for (int i = n; i >= 0; i--)
-    {
-        for (int j = 30; j >=0; j--)
-        {
-            tetris[j][i] = tetris[j][i + 1];
-        }
-    }
-}
-
-int CheckFullRow()
-{
-    int FullRow;
-    bool t = true;
-    for (int i = 21; i >= 2; i--)
-    {
-        for (int j = 23; j >=4; j--)
-        {
-            if (tetris[j][i] != 1) t = false;
-            break;
-        }
-        if (t)
-        {
-            FullRow++;
-            DeleteRow(i);
-        }
-        t = true;
-    }
-    return FullRow;
-}
-
 int main()
 {
     ArrayReset();
 	while (1) // Infinite loop
     {
-        ArrayReset();
-
 		if (kbhit()) // Function that checks keys are pressed or not
 		{
-			key = getch();
+			key = getche();
 			ASCIIValue = key;
-			switch (ASCIIValue)
-			{
-				case 27: break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
-				case 97: tetrominoLocX -= 1; // Move a tetromino to the left when 'A' key is pressed
-				case 100: tetrominoLocX += 1; // Move a tetromino to the right when 'D' key is pressed
-				case 115: tetrominoLocY += 1; // Move a tetromino down faster when 'S' key is pressed
-				case 119: // Change state of a tetromino when 'W' key is pressed
+			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
+			if (ASCIIValue == 97) if (tetrominoLocX > 0) tetrominoLocX -= 1;
+			if (ASCIIValue == 100) if (tetrominoLocX < 20) tetrominoLocX += 1;
+			if (ASCIIValue == 115) tetrominoLocY += 1;;
+			/* if (ASCIIValue == 119) // Change state of a tetromino when 'W' key is pressed
+				{
+					switch (CurrentState)
 					{
-						switch (CurrentState)
-						{
-							case 1: CurrentState = 2;
-							case 2: CurrentState = 1;
-							case 3: CurrentState = 4;
-							case 4: CurrentState = 5;
-							case 5: CurrentState = 6;
-							case 6: CurrentState = 3;
-							case 7: CurrentState = 8;
-							case 8: CurrentState = 9;
-							case 9: CurrentState = 10;
-							case 10: CurrentState = 7;
-							case 11: CurrentState = 12;
-							case 12: CurrentState = 11;
-							case 13: CurrentState = 14;
-							case 14: CurrentState = 15;
-							case 15: CurrentState = 16;
-							case 16: CurrentState = 13;
-							case 17: CurrentState = 18;
-							case 18: CurrentState = 17;
-						}
+						case 1: { CurrentState = 2; break; }
+						case 2: { CurrentState = 1; break; }
+						case 3: { CurrentState = 4; break; }
+						case 4: { CurrentState = 5; break; }
+						case 5: { CurrentState = 6; break; }
+						case 6: { CurrentState = 3; break; }
+						case 7: { CurrentState = 8; break; }
+						case 8: { CurrentState = 9; break; }
+						case 9: { CurrentState = 10; break; }
+						case 10: { CurrentState = 7; break; }
+						case 11: { CurrentState = 12; break; }
+						case 12: { CurrentState = 11; break; }
+						case 13: { CurrentState = 14; break; }
+						case 14: { CurrentState = 15; break; }
+						case 15: { CurrentState = 16; break; }
+						case 16: { CurrentState = 13; break; }
+						case 17: { CurrentState = 18; break; }
+						case 18: { CurrentState = 17; break; }
 					}
-			}
+				} */
+				
 		}
-		
-		tetrominoLocX = Random();
-		tetrominoLocY = 12;
-		BlockZ1(tetrominoLocX, tetrominoLocY);
-		PrintArray(0, 0);
-		
+		PrintArray(1, 1);
+
+		if (NewTetromino)
+		{
+			tetrominoLocX = Random();
+			tetrominoLocY = 1;
+			NewTetromino = false;
+		}
+
+		BlockS1(tetrominoLocX + 1, tetrominoLocY + 1);
+
+		if (DelayTime == 20)
+		{
+			tetrominoLocY += 1;
+			DelayTime = 0;
+		}
+		else DelayTime++;
+
+		if (tetrominoLocY > 18 ||
+			tetris[tetrominoLocY + 1][tetrominoLocX + 1] ==1 ||
+			tetris[tetrominoLocY + 2][tetrominoLocX] == 1 ||
+			tetris[tetrominoLocY + 2][tetrominoLocX -1] == 1)
+			{
+				NewTetromino = true;
+				tetris[tetrominoLocX][tetrominoLocY] = 1;
+				tetris[tetrominoLocX + 1][tetrominoLocY] = 1;
+				tetris[tetrominoLocX][tetrominoLocY + 1] = 1;
+				tetris[tetrominoLocX - 1][tetrominoLocY + 1] = 1;
+			}
+
+		int t = 1;
+		GotoXY(23, t);
+		for (int i = 0; i <= 20; i++)
+			{
+				for (int j = 0; j <= 20; j++) cout << tetris[j][i];
+				GotoXY(23, t++);
+			}
+
+		GotoXY(0, 21);
+		cout << Score;
 	}
 	//cin.get();
 }
