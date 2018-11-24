@@ -275,6 +275,10 @@ int main()
 
 		BlockS1(tetrominoLocX + 1, tetrominoLocY + 1);
 
+		GotoXY(tetrominoLocX + 2, tetrominoLocY + 2); cout << char(248);
+		GotoXY(tetrominoLocX + 1, tetrominoLocY + 3); cout << char(248);
+		GotoXY(tetrominoLocX, tetrominoLocY + 3); cout << char(248);
+
 		if (DelayTime == 20)
 		{
 			tetrominoLocY += 1;
@@ -284,7 +288,7 @@ int main()
 
 		if (tetrominoLocY > 18 ||
 			tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0 ||
-			tetris[tetrominoLocX + 2][tetrominoLocY] != 0 ||
+			tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
 			tetris[tetrominoLocX - 1][tetrominoLocY + 2] != 0)
 			{
 				NewTetromino = true;
