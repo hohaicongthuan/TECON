@@ -44,7 +44,8 @@ char key;
 bool NewTetromino = true,
 	 CanMoveRight = true,
 	 CanMoveLeft = true,
-	 CanMoveDown = true;
+	 CanMoveDown = true,
+	 CanRotate = true;
 
 //============================================================
 
@@ -60,10 +61,10 @@ bool CheckDrop() // Check whether tetrominoes should be dropped or not
 	}
 }
 
-int Random() // Generate a random number
+int Random(int n) // Generate a random number
 {
 	srand((int)time(0));
-	int r = (rand() % (19) + 1);
+	int r = (rand() % n);
 	return r;
 }
 
@@ -190,6 +191,7 @@ void khung()
 
 void BlockI1(int x, int y)
 {
+	// Print the block on the screen
 	GotoXY(x + 1, y + 1); cout << char(178);
 	GotoXY(x, y + 1); cout << char(178);
 	GotoXY(x + 2, y + 1); cout << char(178);
@@ -212,11 +214,22 @@ void BlockI1(int x, int y)
 		}
 	else CanMoveDown = true;
 
+	// Statement checks whether the tetromino could move left
 	if (tetrominoLocX - 2 >= 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
+	//Statement checks whether the tetromino could move right
 	if (tetrominoLocX + 3 <= 19) CanMoveRight = true;
 	else CanMoveRight = false;
+
+	//Statement checks whether the tetromino could rotate (or switch state technically)
+	if (tetrominoLocY + 2 <= 17 ||
+		(tetris[tetrominoLocX][tetrominoLocY] == 0 &&
+		tetris[tetrominoLocX][tetrominoLocY - 1] == 0 &&
+		tetris[tetrominoLocX][tetrominoLocY + 1] == 0 &&
+		tetris[tetrominoLocX][tetrominoLocY + 2] == 0))
+		CanRotate = true;
+	else CanRotate = false;
 
 	// Print collision points
 	GotoXY(tetrominoLocX, tetrominoLocY + 2); cout << char(248);
@@ -252,6 +265,15 @@ void BlockI2(int x, int y)
 
 	if (tetrominoLocX + 1 <= 19) CanMoveRight = true;
 	else CanMoveRight = false;
+
+	if (tetrominoLocX + 2 <= 18 ||
+		tetrominoLocX - 1 >= 0 ||
+		(tetris[tetrominoLocX][tetrominoLocY] == 0 &&
+		tetris[tetrominoLocX - 1][tetrominoLocY] == 0 &&
+		tetris[tetrominoLocX + 1][tetrominoLocY] == 0 &&
+		tetris[tetrominoLocX + 2][tetrominoLocY] == 0))
+		CanRotate = true;
+	else CanRotate = false;
 
 	// Print collision points
 	GotoXY(tetrominoLocX + 1, tetrominoLocY - 1); cout << char(248);
@@ -336,27 +358,28 @@ int main()
 			if (ASCIIValue == 115) if (CanMoveDown) tetrominoLocY += 1;;
 			if (ASCIIValue == 119) // Change state of a tetromino when 'W' key is pressed
 				{
-					switch (CurrentState)
-					{
-						case 1: { CurrentState = 2; break; }
-						case 2: { CurrentState = 1; break; }
-						case 3: { CurrentState = 4; break; }
-						case 4: { CurrentState = 5; break; }
-						case 5: { CurrentState = 6; break; }
-						case 6: { CurrentState = 3; break; }
-						case 7: { CurrentState = 8; break; }
-						case 8: { CurrentState = 9; break; }
-						case 9: { CurrentState = 10; break; }
-						case 10: { CurrentState = 7; break; }
-						case 11: { CurrentState = 12; break; }
-						case 12: { CurrentState = 11; break; }
-						case 13: { CurrentState = 14; break; }
-						case 14: { CurrentState = 15; break; }
-						case 15: { CurrentState = 16; break; }
-						case 16: { CurrentState = 13; break; }
-						case 17: { CurrentState = 18; break; }
-						case 18: { CurrentState = 17; break; }
-					}
+					if (CanRotate)
+						switch (CurrentState)
+						{
+							case 1: { CurrentState = 2; break; }
+							case 2: { CurrentState = 1; break; }
+							case 3: { CurrentState = 4; break; }
+							case 4: { CurrentState = 5; break; }
+							case 5: { CurrentState = 6; break; }
+							case 6: { CurrentState = 3; break; }
+							case 7: { CurrentState = 8; break; }
+							case 8: { CurrentState = 9; break; }
+							case 9: { CurrentState = 10; break; }
+							case 10: { CurrentState = 7; break; }
+							case 11: { CurrentState = 12; break; }
+							case 12: { CurrentState = 11; break; }
+							case 13: { CurrentState = 14; break; }
+							case 14: { CurrentState = 15; break; }
+							case 15: { CurrentState = 16; break; }
+							case 16: { CurrentState = 13; break; }
+							case 17: { CurrentState = 18; break; }
+							case 18: { CurrentState = 17; break; }
+						}
 				}
 				
 		}
@@ -364,10 +387,12 @@ int main()
 
 		if (NewTetromino)
 		{
-			tetrominoLocX = Random();
+			tetrominoLocX = Random(16) + 2;
 			tetrominoLocY = 1;
 			NewTetromino = false;
 			CurrentState = 1;
+			GotoXY(0, 0);
+			khung();
 		}
 
 		if (CurrentState == 1) BlockI1(tetrominoLocX, tetrominoLocY);
@@ -416,10 +441,12 @@ int main()
 		cout << "MoveL = "; if (CanMoveLeft) cout << "True "; else cout << "False";
 		GotoXY(65, 5);
 		cout << "MoveD = "; if (CanMoveDown) cout << "True "; else cout << "False";
+		GotoXY(65, 6);
+		cout << "Rot = "; if (CanRotate) cout << "True "; else cout << "False";
 
 		// Print score
 		GotoXY(0, 22);
-		cout << Score;
+		cout << Score << "                    ";
 	}
 	//cin.get();
 }
