@@ -93,7 +93,7 @@ void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ
     GotoXY(x, y);
     for (int i = 0; i <= 20; i++)
         {
-            for (int j = 0; j <= 20; j++)
+            for (int j = 0; j < 20; j++)
             {
                 if (tetris[j][i] == 0) cout << " "; //char(176); // Tạm hiển thị là "T"
                 /* else if (tetris[j][i] == -1) cout << "A"; // Tạm hiển thị là "A" */
@@ -149,18 +149,113 @@ int CheckFullRow() // Function that checks and returns a number of full rows
     return FullRow;
 }
 
+void khung()
+{
+    // system("cls");
+    // hàng đầu tiên
+    // SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << char(201);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(203);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(187) << endl;
+
+    //hàng thứ 2 đến hàng thứ 19
+    for(int j = 1; j <= 20; ++j)
+    {
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186) << endl;
+    }
+
+    //hàng cuối cùng
+    cout << char(200);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(202);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(188) << endl;
+}
+
 //=============================================================
 
 // Hàm vẽ các Tetromino
 
 void BlockI1(int x, int y)
 {
-	tetris[x][y] = 1;
-	tetris[x - 1][y] = 1;
-	tetris[x + 1][y] = 1;
-	tetris[x + 2][y] = 1;
+	GotoXY(x + 1, y + 1); cout << char(178);
+	GotoXY(x, y + 1); cout << char(178);
+	GotoXY(x + 2, y + 1); cout << char(178);
+	GotoXY(x + 3, y + 1); cout << char(178);
 
 	CurrentState = 1;
+
+	if (tetrominoLocY > 19 ||
+		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0 ||
+		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
+		tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0 ||
+		tetris[tetrominoLocX + 2][tetrominoLocY + 1] != 0)
+		{
+			NewTetromino = true;
+			CanMoveDown = false;
+			tetris[tetrominoLocX][tetrominoLocY] = 1;
+			tetris[tetrominoLocX - 1][tetrominoLocY] = 1;
+			tetris[tetrominoLocX + 1][tetrominoLocY] = 1;
+			tetris[tetrominoLocX + 2][tetrominoLocY] = 1;
+		}
+	else CanMoveDown = true;
+
+	if (tetrominoLocX - 2 >= 0) CanMoveLeft = true;
+	else CanMoveLeft = false;
+
+	if (tetrominoLocX + 3 <= 19) CanMoveRight = true;
+	else CanMoveRight = false;
+
+	// Print collision points
+	GotoXY(tetrominoLocX, tetrominoLocY + 2); cout << char(248);
+	GotoXY(tetrominoLocX + 1, tetrominoLocY + 2); cout << char(248);
+	GotoXY(tetrominoLocX + 2, tetrominoLocY + 2); cout << char(248);
+	GotoXY(tetrominoLocX + 3, tetrominoLocY + 2); cout << char(248);
+}
+
+void BlockI2(int x, int y)
+{
+	GotoXY(x + 1, y + 1); cout << char(178);
+	GotoXY(x + 1, y); cout << char(178);
+	GotoXY(x + 1, y + 2); cout << char(178);
+	GotoXY(x + 1, y + 3); cout << char(178);
+
+	CurrentState = 2;
+
+	if (tetrominoLocY > 17 ||
+		tetris[tetrominoLocX][tetrominoLocY - 2] != 0 ||
+		tetris[tetrominoLocX][tetrominoLocY + 3] != 0)
+		{
+			NewTetromino = true;
+			CanMoveDown = false;
+			tetris[tetrominoLocX][tetrominoLocY] = 1;
+			tetris[tetrominoLocX][tetrominoLocY - 1] = 1;
+			tetris[tetrominoLocX][tetrominoLocY + 1] = 1;
+			tetris[tetrominoLocX][tetrominoLocY + 2] = 1;
+		}
+	else CanMoveDown = true;
+
+	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	else CanMoveLeft = false;
+
+	if (tetrominoLocX + 1 <= 19) CanMoveRight = true;
+	else CanMoveRight = false;
+
+	// Print collision points
+	GotoXY(tetrominoLocX + 1, tetrominoLocY - 1); cout << char(248);
+	GotoXY(tetrominoLocX + 1, tetrominoLocY + 4); cout << char(248);
 }
 
 void BlockJ1(int x, int y)
@@ -228,6 +323,7 @@ void BlockZ1(int x, int y)
 int main()
 {
     ArrayReset();
+	khung();
 	while (1) // Infinite loop
     {
 		if (kbhit()) // Function that checks keys are pressed or not
@@ -235,10 +331,10 @@ int main()
 			key = getche();
 			ASCIIValue = key;
 			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
-			if (ASCIIValue == 97) if (tetrominoLocX > 1) tetrominoLocX -= 1;
-			if (ASCIIValue == 100) if (tetrominoLocX < 19) tetrominoLocX += 1;
-			if (ASCIIValue == 115) if (tetrominoLocY < 18) tetrominoLocY += 1;;
-			/* if (ASCIIValue == 119) // Change state of a tetromino when 'W' key is pressed
+			if (ASCIIValue == 97) if (CanMoveLeft) tetrominoLocX -= 1;
+			if (ASCIIValue == 100) if (CanMoveRight) tetrominoLocX += 1;
+			if (ASCIIValue == 115) if (CanMoveDown) tetrominoLocY += 1;;
+			if (ASCIIValue == 119) // Change state of a tetromino when 'W' key is pressed
 				{
 					switch (CurrentState)
 					{
@@ -261,7 +357,7 @@ int main()
 						case 17: { CurrentState = 18; break; }
 						case 18: { CurrentState = 17; break; }
 					}
-				} */
+				}
 				
 		}
 		PrintArray(1, 1);
@@ -271,22 +367,24 @@ int main()
 			tetrominoLocX = Random();
 			tetrominoLocY = 1;
 			NewTetromino = false;
+			CurrentState = 1;
 		}
 
-		BlockS1(tetrominoLocX + 1, tetrominoLocY + 1);
+		if (CurrentState == 1) BlockI1(tetrominoLocX, tetrominoLocY);
+		else if (CurrentState == 2) BlockI2(tetrominoLocX, tetrominoLocY);
 
-		GotoXY(tetrominoLocX + 2, tetrominoLocY + 2); cout << char(248);
+		/* GotoXY(tetrominoLocX + 2, tetrominoLocY + 2); cout << char(248);
 		GotoXY(tetrominoLocX + 1, tetrominoLocY + 3); cout << char(248);
-		GotoXY(tetrominoLocX, tetrominoLocY + 3); cout << char(248);
+		GotoXY(tetrominoLocX, tetrominoLocY + 3); cout << char(248); */
 
-		if (DelayTime == 20)
+		if (DelayTime == 10)
 		{
 			tetrominoLocY += 1;
 			DelayTime = 0;
 		}
 		else DelayTime++;
 
-		if (tetrominoLocY > 18 ||
+		/* if (tetrominoLocY > 18 ||
 			tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0 ||
 			tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
 			tetris[tetrominoLocX - 1][tetrominoLocY + 2] != 0)
@@ -296,17 +394,31 @@ int main()
 				tetris[tetrominoLocX + 1][tetrominoLocY] = 1;
 				tetris[tetrominoLocX][tetrominoLocY + 1] = 1;
 				tetris[tetrominoLocX - 1][tetrominoLocY + 1] = 1;
-			}
+			} */
 
+		// Print array
 		int t = 1;
-		GotoXY(23, t);
+		GotoXY(44, t);
 		for (int i = 0; i <= 20; i++)
 			{
-				for (int j = 0; j <= 20; j++) cout << tetris[j][i];
-				GotoXY(23, t++);
+				for (int j = 0; j < 20; j++) cout << tetris[j][i];
+				GotoXY(44, t++);
 			}
 
-		GotoXY(0, 21);
+		// Print variables
+		GotoXY(65, 1);
+		cout << "X = " << tetrominoLocX;
+		GotoXY(65, 2);
+		cout << "Y = " << tetrominoLocY;
+		GotoXY(65, 3);
+		cout << "MoveR = "; if (CanMoveRight) cout << "True "; else cout << "False";
+		GotoXY(65, 4);
+		cout << "MoveL = "; if (CanMoveLeft) cout << "True "; else cout << "False";
+		GotoXY(65, 5);
+		cout << "MoveD = "; if (CanMoveDown) cout << "True "; else cout << "False";
+
+		// Print score
+		GotoXY(0, 22);
 		cout << Score;
 	}
 	//cin.get();
