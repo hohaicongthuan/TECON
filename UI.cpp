@@ -9,6 +9,7 @@ void gotoxy(int x,int y);
 void first_ui(int);
 void second_ui(int);
 void khung(int);
+void gameover(int);
 char a[50][50];
 
 //ham gotoxy
@@ -261,6 +262,185 @@ void khung(int)
     cout << char(188) << endl;
 }
 
+void gameover(int)
+{
+    //vẽ khung
+    //hàng đầu tiên
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << char(201);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(203);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(187) << endl;
+
+    //hàng thứ 2 đến hàng thứ 19
+    for(int j = 1; j <= 20; ++j)
+    {
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186) << endl;
+    }
+
+    //hàng cuối cùng
+    cout << char(200);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(202);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(188) << endl;
+
+    //chữ GAME
+    //hàng đầu tiên
+    gotoxy (1,4);
+    //G
+    cout << char(218) << char(196) << char(196) << char(191);
+    cout << " ";
+    //A
+    cout << char(218) << char(196) << char(196) << char(191);
+    cout << " ";
+    //M
+    cout << char(218) << char(191) << " " << char(218) << char(191);
+    cout << " ";
+    //E
+    cout << char(218) << char(196) << char(196) << char(191);
+
+    //hàng thứ 2
+    gotoxy(1,5);
+    //G
+    cout << char(179) << " " << " " << " ";
+    cout << " ";
+    //A
+    cout << char(179) << " " << " " << char(179);
+    cout << " ";
+    //M
+    cout << char(179) << char(192) << char(191) << char(217) << char(179);
+    cout << " ";
+    //E
+    cout << char(179);
+
+    //hàng thứ 3
+    gotoxy(1,6);
+    //G
+    cout << char(179) << " " << " " << char(194);
+    cout << " ";
+    //A
+    cout << char(195) << char(196) << char(196) << char(180);
+    cout << " ";
+    //M
+    cout << char(179) << " " << " " << " " << char(179);
+    cout << " ";
+    //E
+    cout << char(195) << char(196) << char(196) << " ";
+
+    //hang thu 4
+    gotoxy(1,7);
+    //G
+    cout << char(179) << " " << " " << char(179);
+    cout << " ";
+    //A
+    cout << char(179) << " " << " " << char(179);
+    cout << " ";
+    //M
+    cout << char(179) << " " << " " << " " << char(179);
+    cout << " ";
+    //E
+    cout << char(179);
+
+    //hang thu 5
+    gotoxy(1,8);
+    //G
+    cout << char(192) << char(196) << char(196) << char(217);
+    cout << " ";
+    //A
+    cout << char(192) << " " << " " << char(217);
+    cout << " ";
+    //M
+    cout << char(192) << " " << " " << " " << char(217);
+    cout << " ";
+    //E
+    cout << char(192) << char(196) << char(196) << char(217);
+
+    //chu Over
+    //hàng đầu tiên
+    gotoxy (2,10);
+    //O
+    cout << char(218) << char(196) << char(196) << char(191);
+    cout << " ";
+    //V
+    cout << char(218) << " " << " " << char(191);
+    cout << " ";
+    //E
+    cout << char(218) << char(196) << char(191);
+    cout << " ";
+    //R
+    cout << char(218) << char(196) << char(196)  << char(191);
+
+    //hang thu 2
+    gotoxy (2,11);
+    //O
+    cout << char(179) << " " << " " << char(179);
+    cout << " ";
+    //V
+    cout << char(179) << " " << " " << char(179);
+    cout << " ";
+    //E
+    cout << char(179) << " " << " ";
+    cout << " ";
+    //R
+    cout << char(179) << " " << " "  << char(179);
+
+    //hang thu 3
+    gotoxy (2,12);
+    //O
+    cout << char(179) << " " << " " << char(179);
+    cout << " ";
+    //V
+    cout << char(179) << " " << " " << char(179);
+    cout << " ";
+    //E
+    cout << char(195) << char(196) << " ";
+    cout << " ";
+    //R
+    cout << char(179) << char(218) << char(196) << char(217);
+
+    //hang thu 4
+    gotoxy (2,13);
+    //O
+    cout << char(179) << " " << " " << char(179);
+    cout << " ";
+    //V
+    cout << char(92) << " " << " " << char(47);
+    cout << " ";
+    //E
+    cout << char(179) << " " << " ";
+    cout << " ";
+    //R
+    cout << char(179) << char(179) << " " << " ";
+
+    //hang thu 5
+    gotoxy (2,14);
+    //O
+    cout << char(192) << char(196) << char(196) << char(217);
+    cout << " ";
+    //V
+    cout << " " << char(92) << char(47) << " ";
+    cout << " ";
+    //E
+    cout << char(192) << char(196) << char(217);
+    cout << " ";
+    //R
+    cout << char(192) << char(192) << char(196) << char(217);
+
+}
+
+
 int main()
 {
     //ham an con tro
@@ -269,9 +449,11 @@ int main()
 	Info.dwSize = 20;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
 
-    first_ui(1);
-    second_ui(1);
-    getch();
+//    first_ui(1);
+//    second_ui(1);
+//    getch();
+//    khung(1);
+    gameover(1);
     gotoxy(0,22);
     return 0;
 }
