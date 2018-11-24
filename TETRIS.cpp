@@ -41,13 +41,12 @@ unsigned short int CurrentState = 0;
 
 char key;
 
-bool NewTetromino = true;
+bool NewTetromino = true,
+	 CanMoveRight = true,
+	 CanMoveLeft = true,
+	 CanMoveDown = true;
 
 //============================================================
-
-
-
-
 
 //============================================================
 
@@ -96,7 +95,7 @@ void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ
         {
             for (int j = 0; j <= 20; j++)
             {
-                if (tetris[j][i] == 0) cout << char(176); // Tạm hiển thị là "T"
+                if (tetris[j][i] == 0) cout << " "; //char(176); // Tạm hiển thị là "T"
                 /* else if (tetris[j][i] == -1) cout << "A"; // Tạm hiển thị là "A" */
                 else if (tetris[j][i] == 1) cout << char(178); // Tạm hiển thị là "O"
             }
@@ -236,9 +235,9 @@ int main()
 			key = getche();
 			ASCIIValue = key;
 			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
-			if (ASCIIValue == 97) if (tetrominoLocX > 0) tetrominoLocX -= 1;
-			if (ASCIIValue == 100) if (tetrominoLocX < 20) tetrominoLocX += 1;
-			if (ASCIIValue == 115) tetrominoLocY += 1;;
+			if (ASCIIValue == 97) if (tetrominoLocX > 1) tetrominoLocX -= 1;
+			if (ASCIIValue == 100) if (tetrominoLocX < 19) tetrominoLocX += 1;
+			if (ASCIIValue == 115) if (tetrominoLocY < 18) tetrominoLocY += 1;;
 			/* if (ASCIIValue == 119) // Change state of a tetromino when 'W' key is pressed
 				{
 					switch (CurrentState)
@@ -284,9 +283,9 @@ int main()
 		else DelayTime++;
 
 		if (tetrominoLocY > 18 ||
-			tetris[tetrominoLocY + 1][tetrominoLocX + 1] ==1 ||
-			tetris[tetrominoLocY + 2][tetrominoLocX] == 1 ||
-			tetris[tetrominoLocY + 2][tetrominoLocX -1] == 1)
+			tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0 ||
+			tetris[tetrominoLocX + 2][tetrominoLocY] != 0 ||
+			tetris[tetrominoLocX - 1][tetrominoLocY + 2] != 0)
 			{
 				NewTetromino = true;
 				tetris[tetrominoLocX][tetrominoLocY] = 1;
