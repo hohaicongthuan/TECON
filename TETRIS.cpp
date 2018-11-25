@@ -51,16 +51,6 @@ bool NewTetromino = true,
 
 //============================================================
 
-bool CheckDrop() // Check whether tetrominoes should be dropped or not
-{
-	if (count == DelayTime) return true;
-	else
-	{
-		count++;
-		return false;
-	}
-}
-
 int Random(int n) // Generate a random number
 {
 	srand((int)time(0));
@@ -111,16 +101,16 @@ void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ
 
 void DeleteRow(int n)
 {
-    for (int i = 0; i <= 30; i++) tetris[i][n] = '0';
+    for (int i = 0; i <= 19; i++) tetris[i][n] = 0;
 }
 
 void MoveAllRowAbove(int n)
 {
     for (int i = n; i >= 0; i--)
     {
-        for (int j = 30; j >=0; j--)
+        for (int j = 19; j >= 0; j--)
         {
-            tetris[j][i] = tetris[j][i + 1];
+            tetris[j][i] = tetris[j][i - 1];
         }
     }
 }
@@ -128,26 +118,26 @@ void MoveAllRowAbove(int n)
 int CheckFullRow() // Function that checks and returns a number of full rows
 {
     int FullRow = 0;
-    bool t = true;
-    for (int i = 21; i >= 2; i--)
-    {
-        for (int j = 23; j >=4; j--)
-        {
-            if (tetris[j][i] != 1)
+	bool t = true;
+    for (int i = 19; i >= 0; i--)
+	{
+		for (int j = 19; j >= 0; j--)
+		{
+			if (tetris[j][i] == 0) 
 			{
 				t = false;
 				break;
 			}
-        }
-        if (t)
-        {
-            FullRow++;
-            DeleteRow(i);
+		}
+		// GotoXY(65, 7); cout << "Full Row? = " << t;
+		if (t)
+		{
+			FullRow++;
+			DeleteRow(i);
 			MoveAllRowAbove(i);
-        }
-        t = true;
-    }
-    return FullRow;
+		}
+	}
+	return FullRow;
 }
 
 void khung()
@@ -318,6 +308,8 @@ void BlockJ1(int x, int y)
 		CanRotate = true;
 	else CanRotate = false; */
 
+	CanRotate = true; // Temp
+
 	// Print collision points
 	GotoXY(tetrominoLocX, tetrominoLocY + 2); cout << char(248);
 	GotoXY(tetrominoLocX + 1, tetrominoLocY + 2); cout << char(248);
@@ -360,6 +352,8 @@ void BlockJ2(int x, int y)
 		tetris[tetrominoLocX + 2][tetrominoLocY] == 0))
 		CanRotate = true;
 	else CanRotate = false; */
+
+	CanRotate = true; // Temp
 
 	// Print collision points
 	GotoXY(tetrominoLocX, tetrominoLocY + 3); cout << char(248);
@@ -404,6 +398,8 @@ void BlockJ3(int x, int y)
 		CanRotate = true;
 	else CanRotate = false; */
 
+	CanRotate = true; // Temp
+
 	// Print collision points
 	GotoXY(tetrominoLocX, tetrominoLocY + 2); cout << char(248);
 	GotoXY(tetrominoLocX + 1, tetrominoLocY + 2); cout << char(248);
@@ -446,6 +442,8 @@ void BlockJ4(int x, int y)
 		tetris[tetrominoLocX + 2][tetrominoLocY] == 0))
 		CanRotate = true;
 	else CanRotate = false; */
+
+	CanRotate = true; // Temp
 
 	// Print collision points
 	GotoXY(tetrominoLocX + 1, tetrominoLocY + 3); cout << char(248);
@@ -648,14 +646,12 @@ int main()
 		{
 			tetrominoLocX = Random(16) + 2;
 			tetrominoLocY = 1;
-			NewTetromino = false;
-			CurrentState = 3;
+			CurrentState = Random(5) + 1;
 			GotoXY(0, 0);
 			khung();
+			Score += CheckFullRow() * 100;
+			NewTetromino = false;
 		}
-
-		if (CurrentState == 1) BlockI1(tetrominoLocX, tetrominoLocY);
-		else if (CurrentState == 2) BlockI2(tetrominoLocX, tetrominoLocY);
 
 		switch (CurrentState)
 		{
@@ -686,8 +682,6 @@ int main()
 		}
 		else DelayTime++;
 
-		
-
 		// Print array
 		int t = 1;
 		GotoXY(44, t);
@@ -716,6 +710,16 @@ int main()
 		// Print score
 		GotoXY(0, 22);
 		cout << Score << "                    ";
+
+		//Statement ends the current game
+		for (int i = 0; i < 19; i++) 
+			if (tetris[i][0] != 0)
+			{
+				ArrayReset();
+				PrintArray(1, 1);
+				Score = 0;
+				NewTetromino = true;
+			}
 	}
 	//cin.get();
 }
