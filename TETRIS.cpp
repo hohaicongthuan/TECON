@@ -593,12 +593,39 @@ void BlockS2(int x, int y)
 
 void BlockT1(int x, int y)
 {
-	tetris[x][y] = 1;
-	tetris[x - 1][y] = 1;
-	tetris[x + 1][y] = 1;
-	tetris[x][y + 1] = 1;
+	GotoXY(x + 1, y + 1); cout << char(178);
+	GotoXY(x, y + 1); cout << char(178);
+	GotoXY(x + 2, y + 1); cout << char(178);
+	GotoXY(x + 1, y + 2); cout << char(178);
 
 	CurrentState = 13;
+
+	if (tetrominoLocY >= 18 ||
+		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0 ||
+		tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
+		tetris[tetrominoLocX + 1][tetrominoLocY + 1 != 0)
+		{
+			NewTetromino = true;
+			CanMoveDown = false;
+			tetris[tetrominoLocX][tetrominoLocY] = 1;
+			tetris[tetrominoLocX - 1][tetrominoLocY] = 1;
+			tetris[tetrominoLocX + 1][tetrominoLocY] = 1;
+			tetris[tetrominoLocX][tetrominoLocY + 1] = 1;
+		}
+	else CanMoveDown = true;
+
+	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	else CanMoveLeft = false;
+
+	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
+	else CanMoveRight = false;
+
+	CanRotate = true; // Temp
+
+	// Print collision points
+	GotoXY(tetrominoLocX, tetrominoLocY + 2); cout << char(248);
+	GotoXY(tetrominoLocX + 1, tetrominoLocY + 3); cout << char(248);
+	GotoXY(tetrominoLocX + 2, tetrominoLocY + 2); cout << char(248);
 }
 
 void BlockT2(int x, int y)
@@ -608,7 +635,39 @@ void BlockT2(int x, int y)
 
 void BlockT3(int x, int y)
 {
+	GotoXY(x + 1, y + 1); cout << char(178);
+	GotoXY(x, y + 1); cout << char(178);
+	GotoXY(x + 1, y); cout << char(178);
+	GotoXY(x + 2, y + 1); cout << char(178);
 
+	CurrentState = 15;
+
+	if (tetrominoLocY >= 18 ||
+		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0 ||
+		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
+		tetris[tetrominoLocX + 1][tetrominoLocY + 1 != 0)
+		{
+			NewTetromino = true;
+			CanMoveDown = false;
+			tetris[tetrominoLocX][tetrominoLocY] = 1;
+			tetris[tetrominoLocX - 1][tetrominoLocY] = 1;
+			tetris[tetrominoLocX + 1][tetrominoLocY] = 1;
+			tetris[tetrominoLocX][tetrominoLocY - 1] = 1;
+		}
+	else CanMoveDown = true;
+
+	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	else CanMoveLeft = false;
+
+	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
+	else CanMoveRight = false;
+
+	CanRotate = true; // Temp
+
+	// Print collision points
+	GotoXY(tetrominoLocX, tetrominoLocY + 2); cout << char(248);
+	GotoXY(tetrominoLocX + 1, tetrominoLocY + 2); cout << char(248);
+	GotoXY(tetrominoLocX + 2, tetrominoLocY + 2); cout << char(248);
 }
 
 void BlockT4(int x, int y)
@@ -766,7 +825,7 @@ int main()
 			case 18: { BlockZ2(tetrominoLocX, tetrominoLocY); break; }
 		}
 
-		if (DelayTime == 1)
+		if (DelayTime == 15)
 		{
 			tetrominoLocY += 1;
 			DelayTime = 0;
