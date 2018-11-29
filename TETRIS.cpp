@@ -603,7 +603,7 @@ void BlockT1(int x, int y)
 	if (tetrominoLocY >= 18 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
-		tetris[tetrominoLocX + 1][tetrominoLocY + 1 != 0)
+		tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0)
 		{
 			NewTetromino = true;
 			CanMoveDown = false;
@@ -645,7 +645,7 @@ void BlockT3(int x, int y)
 	if (tetrominoLocY >= 18 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
-		tetris[tetrominoLocX + 1][tetrominoLocY + 1 != 0)
+		tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0)
 		{
 			NewTetromino = true;
 			CanMoveDown = false;
