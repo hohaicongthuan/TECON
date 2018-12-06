@@ -23,7 +23,8 @@ int Score = 0, HighScore = 0,
 	DelayTime = 1, count = 0,
 	ASCIIValue;
 
-unsigned short int CurrentState = 0;
+unsigned short int	CurrentState = 0,
+					NextPiece = 0;
 
 // Quy ước các trạng thái của tetrominoes
 // Vì "switch... case" không hỗ trợ dữ liệu chuỗi
@@ -584,7 +585,7 @@ void BlockL4(int x, int y)
 	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
-	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
+	if (tetrominoLocX + 1 <= 19) CanMoveRight = true;
 	else CanMoveRight = false;
 
 	CanRotate = true; // Temp
@@ -805,7 +806,7 @@ void BlockT3(int x, int y)
 		}
 	else CanMoveDown = true;
 
-	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	if (tetrominoLocX - 1 > 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
 	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
@@ -844,7 +845,7 @@ void BlockT4(int x, int y)
 	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
-	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
+	if (tetrominoLocX + 1 <= 19) CanMoveRight = true;
 	else CanMoveRight = false;
 
 	CanRotate = true; // Temp
@@ -941,7 +942,7 @@ int main()
 			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
 			if (ASCIIValue == 97) if (CanMoveLeft) tetrominoLocX -= 1;
 			if (ASCIIValue == 100) if (CanMoveRight) tetrominoLocX += 1;
-			if (ASCIIValue == 115) if (CanMoveDown) tetrominoLocY += 1;;
+			if (ASCIIValue == 115) if (CanMoveDown) if (tetrominoLocY < 20) tetrominoLocY += 1;;
 			if (ASCIIValue == 119) // Change state of a tetromino when 'W' key is pressed
 				{
 					if (CanRotate)
@@ -1040,8 +1041,12 @@ int main()
 		cout << "State = " << CurrentState;
 
 		// Print score
-		GotoXY(0, 22);
-		cout << Score << "                    ";
+		GotoXY(22, 12);
+		cout << " Your Score: " << Score;
+
+		//Print next piece
+		GotoXY(27, 2);
+		cout << "Next piece";
 
 		//Statement ends the current game
 		for (int i = 0; i < 19; i++) 
@@ -1052,6 +1057,10 @@ int main()
 				Score = 0;
 				NewTetromino = true;
 			}
+
+		// Print out the key that user pressed
+		GotoXY(0, 22);
+		cout << "Key pressed: ";
 	}
 	//cin.get();
 }
