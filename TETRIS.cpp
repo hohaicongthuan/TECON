@@ -42,12 +42,11 @@ unsigned short int	CurrentState = 0,
 
 char key; // Stores keys that user pressed
 
-bool NewTetromino = true,
-	 CanMoveRight = true,
-	 CanMoveLeft = true,
-	 CanMoveDown = true,
-	 CanRotate = true;
-
+bool	NewTetromino = true,
+		CanMoveRight = true,
+		CanMoveLeft = true,
+		CanMoveDown = true,
+		CanRotate = true;
 //============================================================
 
 //============================================================
@@ -102,14 +101,14 @@ void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ
 
 void DeleteRow(int n)
 {
-    for (int i = 0; i <= 19; i++) tetris[i][n] = 0;
+    for (int i = 0; i <= 20; i++) tetris[i][n] = 0;
 }
 
 void MoveAllRowAbove(int n)
 {
     for (int i = n; i >= 0; i--)
     {
-        for (int j = 19; j >= 0; j--)
+        for (int j = 20; j >= 0; j--)
         {
             tetris[j][i] = tetris[j][i - 1];
         }
@@ -119,18 +118,18 @@ void MoveAllRowAbove(int n)
 int CheckFullRow() // Function that checks and returns a number of full rows
 {
     int FullRow = 0;
-	bool t = true;
-    for (int i = 19; i >= 0; i--)
+	bool t = false;
+    for (int i = 0; i <= 20; i++)
 	{
-		for (int j = 19; j >= 0; j--)
+		for (int j = 0; j <= 19; j++)
 		{
 			if (tetris[j][i] == 0) 
 			{
 				t = false;
 				break;
 			}
+			t = true;
 		}
-		// GotoXY(65, 7); cout << "Full Row? = " << t;
 		if (t)
 		{
 			FullRow++;
@@ -662,7 +661,7 @@ void BlockS1(int x, int y)
 		}
 	else CanMoveDown = true;
 
-	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	if (tetrominoLocX - 1 > 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
 	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
@@ -927,12 +926,68 @@ void BlockZ2(int x, int y)
 	GotoXY(tetrominoLocX, tetrominoLocY + 3); cout << char(248);
 }
 
+void PrintTetromino()
+{
+	switch (CurrentState)
+		{
+			case 0: { BlockO(tetrominoLocX, tetrominoLocY); break;}
+			case 1: { BlockI1(tetrominoLocX, tetrominoLocY); break; }
+			case 2: { BlockI2(tetrominoLocX, tetrominoLocY); break; }
+			case 3: { BlockJ1(tetrominoLocX, tetrominoLocY); break; }
+			case 4: { BlockJ2(tetrominoLocX, tetrominoLocY); break; }
+			case 5: { BlockJ3(tetrominoLocX, tetrominoLocY); break; }
+			case 6: { BlockJ4(tetrominoLocX, tetrominoLocY); break; }
+			case 7: { BlockL1(tetrominoLocX, tetrominoLocY); break; }
+			case 8: { BlockL2(tetrominoLocX, tetrominoLocY); break; }
+			case 9: { BlockL3(tetrominoLocX, tetrominoLocY); break; }
+			case 10: { BlockL4(tetrominoLocX, tetrominoLocY); break; }
+			case 11: { BlockS1(tetrominoLocX, tetrominoLocY); break; }
+			case 12: { BlockS2(tetrominoLocX, tetrominoLocY); break; }
+			case 13: { BlockT1(tetrominoLocX, tetrominoLocY); break; }
+			case 14: { BlockT2(tetrominoLocX, tetrominoLocY); break; }
+			case 15: { BlockT3(tetrominoLocX, tetrominoLocY); break; }
+			case 16: { BlockT4(tetrominoLocX, tetrominoLocY); break; }
+			case 17: { BlockZ1(tetrominoLocX, tetrominoLocY); break; }
+			case 18: { BlockZ2(tetrominoLocX, tetrominoLocY); break; }
+		}
+}
+
+
 //============================================================
 
 int main()
 {
     ArrayReset();
 	khung();
+	
+	// Print score
+	GotoXY(22, 12);
+	cout << "Your Score: " << Score;
+
+	//Print next piece
+	GotoXY(27, 2);
+	cout << "Next piece";
+
+	// Print out the key that user pressed
+	GotoXY(0, 22);
+	cout << "Key pressed: ";
+
+	// Print variables
+	GotoXY(65, 1);
+	cout << "X = " << tetrominoLocX << " ";
+	GotoXY(65, 2);
+	cout << "Y = " << tetrominoLocY << " ";
+	GotoXY(65, 3);
+	cout << "MoveR = "; if (CanMoveRight) cout << "True "; else cout << "False";
+	GotoXY(65, 4);
+	cout << "MoveL = "; if (CanMoveLeft) cout << "True "; else cout << "False";
+	GotoXY(65, 5);
+	cout << "MoveD = "; if (CanMoveDown) cout << "True "; else cout << "False";
+	GotoXY(65, 6);
+	cout << "Rot = "; if (CanRotate) cout << "True "; else cout << "False";
+	GotoXY(65, 7);
+	cout << "State = " << CurrentState;
+
 	while (1) // Infinite loop
     {
 		if (kbhit()) // Function that checks keys are pressed or not
@@ -940,9 +995,24 @@ int main()
 			key = getche();
 			ASCIIValue = key;
 			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
-			if (ASCIIValue == 97) if (CanMoveLeft) tetrominoLocX -= 1;
-			if (ASCIIValue == 100) if (CanMoveRight) tetrominoLocX += 1;
-			if (ASCIIValue == 115) if (CanMoveDown) if (tetrominoLocY < 20) tetrominoLocY += 1;;
+			if (ASCIIValue == 97) 
+			{
+				if (CanMoveLeft) tetrominoLocX -= 1;
+				PrintArray(1, 1);
+				PrintTetromino();
+			}
+			if (ASCIIValue == 100) 
+			{
+				if (CanMoveRight) tetrominoLocX += 1;
+				PrintArray(1, 1);
+				PrintTetromino();
+			}
+			if (ASCIIValue == 115) 
+			{
+				if (CanMoveDown) if (tetrominoLocY < 20) tetrominoLocY += 1;
+				PrintArray(1, 1);
+				PrintTetromino();
+			}
 			if (ASCIIValue == 119) // Change state of a tetromino when 'W' key is pressed
 				{
 					if (CanRotate)
@@ -967,11 +1037,11 @@ int main()
 							case 17: { CurrentState = 18; break; }
 							case 18: { CurrentState = 17; break; }
 						}
+					PrintArray(1, 1);
+					PrintTetromino();
 				}
 				
 		}
-		
-		PrintArray(1, 1);
 
 		// Statement checks whether a new tetromino should be generated
 		if (NewTetromino)
@@ -981,75 +1051,33 @@ int main()
 			CurrentState = Random(18);
 			GotoXY(0, 0);
 			khung();
-			Score += CheckFullRow() * 100;
+			Score += CheckFullRow() * 10;
 			NewTetromino = false;
-		}
 
-		switch (CurrentState)
-		{
-			case 0: { BlockO(tetrominoLocX, tetrominoLocY); break;}
-			case 1: { BlockI1(tetrominoLocX, tetrominoLocY); break; }
-			case 2: { BlockI2(tetrominoLocX, tetrominoLocY); break; }
-			case 3: { BlockJ1(tetrominoLocX, tetrominoLocY); break; }
-			case 4: { BlockJ2(tetrominoLocX, tetrominoLocY); break; }
-			case 5: { BlockJ3(tetrominoLocX, tetrominoLocY); break; }
-			case 6: { BlockJ4(tetrominoLocX, tetrominoLocY); break; }
-			case 7: { BlockL1(tetrominoLocX, tetrominoLocY); break; }
-			case 8: { BlockL2(tetrominoLocX, tetrominoLocY); break; }
-			case 9: { BlockL3(tetrominoLocX, tetrominoLocY); break; }
-			case 10: { BlockL4(tetrominoLocX, tetrominoLocY); break; }
-			case 11: { BlockS1(tetrominoLocX, tetrominoLocY); break; }
-			case 12: { BlockS2(tetrominoLocX, tetrominoLocY); break; }
-			case 13: { BlockT1(tetrominoLocX, tetrominoLocY); break; }
-			case 14: { BlockT2(tetrominoLocX, tetrominoLocY); break; }
-			case 15: { BlockT3(tetrominoLocX, tetrominoLocY); break; }
-			case 16: { BlockT4(tetrominoLocX, tetrominoLocY); break; }
-			case 17: { BlockZ1(tetrominoLocX, tetrominoLocY); break; }
-			case 18: { BlockZ2(tetrominoLocX, tetrominoLocY); break; }
+			// Print array
+			int t = 1;
+			GotoXY(44, t);
+			for (int i = 0; i <= 20; i++)
+				{
+					for (int j = 0; j < 20; j++) cout << tetris[j][i];
+					GotoXY(44, t++);
+				}
+			
+			PrintArray(1, 1);
+			PrintTetromino();
 		}
-
-		if (DelayTime == 15)
+		
+		if (DelayTime == 20000)
 		{
 			tetrominoLocY += 1;
 			DelayTime = 0;
+			PrintArray(1, 1);
+			PrintTetromino();
 		}
 		else DelayTime++;
 
-		// Print array
-		int t = 1;
-		GotoXY(44, t);
-		for (int i = 0; i <= 20; i++)
-			{
-				for (int j = 0; j < 20; j++) cout << tetris[j][i];
-				GotoXY(44, t++);
-			}
-
-		// Print variables
-		GotoXY(65, 1);
-		cout << "X = " << tetrominoLocX << " ";
-		GotoXY(65, 2);
-		cout << "Y = " << tetrominoLocY << " ";
-		GotoXY(65, 3);
-		cout << "MoveR = "; if (CanMoveRight) cout << "True "; else cout << "False";
-		GotoXY(65, 4);
-		cout << "MoveL = "; if (CanMoveLeft) cout << "True "; else cout << "False";
-		GotoXY(65, 5);
-		cout << "MoveD = "; if (CanMoveDown) cout << "True "; else cout << "False";
-		GotoXY(65, 6);
-		cout << "Rot = "; if (CanRotate) cout << "True "; else cout << "False";
-		GotoXY(65, 7);
-		cout << "State = " << CurrentState;
-
-		// Print score
-		GotoXY(22, 12);
-		cout << " Your Score: " << Score;
-
-		//Print next piece
-		GotoXY(27, 2);
-		cout << "Next piece";
-
 		//Statement ends the current game
-		for (int i = 0; i < 19; i++) 
+		for (int i = 0; i <= 19; i++) 
 			if (tetris[i][0] != 0)
 			{
 				ArrayReset();
@@ -1057,10 +1085,6 @@ int main()
 				Score = 0;
 				NewTetromino = true;
 			}
-
-		// Print out the key that user pressed
-		GotoXY(0, 22);
-		cout << "Key pressed: ";
 	}
 	//cin.get();
 }
