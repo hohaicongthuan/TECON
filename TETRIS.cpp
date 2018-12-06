@@ -39,7 +39,7 @@ unsigned short int CurrentState = 0;
 	// 'L2' = 8		'Z1' = 17
 	// 'L3' = 9		'Z2' = 18
 
-char key;
+char key; // Stores keys that user pressed
 
 bool NewTetromino = true,
 	 CanMoveRight = true,
@@ -189,7 +189,7 @@ void BlockI1(int x, int y)
 
 	CurrentState = 1;
 
-	if (tetrominoLocY > 19 ||
+	if (tetrominoLocY >= 20 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0 ||
@@ -237,7 +237,7 @@ void BlockI2(int x, int y)
 
 	CurrentState = 2;
 
-	if (tetrominoLocY > 17 ||
+	if (tetrominoLocY >= 18 ||
 		tetris[tetrominoLocX][tetrominoLocY - 2] != 0 ||
 		tetris[tetrominoLocX][tetrominoLocY + 3] != 0)
 		{
@@ -279,7 +279,7 @@ void BlockJ1(int x, int y)
 
 	CurrentState = 3;
 
-	if (tetrominoLocY >= 20 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY + 2] != 0)
@@ -415,7 +415,7 @@ void BlockJ4(int x, int y)
 
 	CurrentState = 6;
 
-	if (tetrominoLocY >= 20 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY] != 0)
 		{
@@ -459,7 +459,7 @@ void BlockL1(int x, int y)
 
 	CurrentState = 7;
 
-	if (tetrominoLocY >= 18 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 2] != 0)
@@ -473,7 +473,7 @@ void BlockL1(int x, int y)
 		}
 	else CanMoveDown = true;
 
-	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	if (tetrominoLocX - 1 > 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
 	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
@@ -496,7 +496,7 @@ void BlockL2(int x, int y)
 
 	CurrentState = 8;
 
-	if (tetrominoLocY >= 18 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY + 2] != 0)
 		{
@@ -531,7 +531,7 @@ void BlockL3(int x, int y)
 
 	CurrentState = 9;
 
-	if (tetrominoLocY >= 18 ||
+	if (tetrominoLocY >= 20 ||
 		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0)
@@ -545,7 +545,7 @@ void BlockL3(int x, int y)
 		}
 	else CanMoveDown = true;
 
-	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	if (tetrominoLocX - 1 > 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
 	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
@@ -568,7 +568,7 @@ void BlockL4(int x, int y)
 
 	CurrentState = 10;
 
-	if (tetrominoLocY >= 18 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY] != 0)
 		{
@@ -647,7 +647,7 @@ void BlockS1(int x, int y)
 
 	CurrentState = 11;
 
-	if (tetrominoLocY >= 18 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 2] != 0)
@@ -684,7 +684,7 @@ void BlockS2(int x, int y)
 
 	CurrentState = 12;
 
-	if (tetrominoLocY >= 18 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY + 2] != 0)
 		{
@@ -719,7 +719,7 @@ void BlockT1(int x, int y)
 
 	CurrentState = 13;
 
-	if (tetrominoLocY >= 18 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
 		tetris[tetrominoLocX + 1][tetrominoLocY + 1] != 0)
@@ -733,7 +733,7 @@ void BlockT1(int x, int y)
 		}
 	else CanMoveDown = true;
 
-	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	if (tetrominoLocX - 1 > 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
 	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
@@ -828,7 +828,7 @@ void BlockT4(int x, int y)
 
 	CurrentState = 16;
 
-	if (tetrominoLocY >= 20 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX][tetrominoLocY + 2] != 0 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 1] != 0)
 		{
@@ -877,7 +877,7 @@ void BlockZ1(int x, int y)
 		}
 	else CanMoveDown = true;
 
-	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	if (tetrominoLocX - 1 > 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
 	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
@@ -900,7 +900,7 @@ void BlockZ2(int x, int y)
 
 	CurrentState = 18;
 
-	if (tetrominoLocY >= 20 ||
+	if (tetrominoLocY >= 19 ||
 		tetris[tetrominoLocX][tetrominoLocY + 1] != 0 ||
 		tetris[tetrominoLocX - 1][tetrominoLocY + 2] != 0)
 		{
@@ -913,10 +913,10 @@ void BlockZ2(int x, int y)
 		}
 	else CanMoveDown = true;
 
-	if (tetrominoLocX - 1 >= 0) CanMoveLeft = true;
+	if (tetrominoLocX - 1 > 0) CanMoveLeft = true;
 	else CanMoveLeft = false;
 
-	if (tetrominoLocX + 1 <= 18) CanMoveRight = true;
+	if (tetrominoLocX + 1 <= 19) CanMoveRight = true;
 	else CanMoveRight = false;
 
 	CanRotate = true; // Temp
