@@ -1005,6 +1005,164 @@ void PrintTetromino()
 		}
 }
 
+void PrintNextPiece(int x, int y)
+{
+	switch (NextPiece)
+		{
+			case 0: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x + 2, y + 2); cout << char(178);
+					break;
+				}
+			case 1: 
+				{
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					GotoXY(x + 3, y + 1); cout << char(178); 
+					break; 
+				}
+			case 2: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x + 1, y + 3); cout << char(178);
+					break; 
+				}
+			case 3: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x + 2, y + 2); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					break; 
+				}
+			case 4: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x, y + 2); cout << char(178);
+					break;
+				}
+			case 5: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x, y); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					break;
+				}
+			case 6: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 2, y); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					break;
+				}
+			case 7: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					GotoXY(x, y + 2); cout << char(178);
+					break;
+				}
+			case 8: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x + 2, y + 2); cout << char(178);
+					break;
+				}
+			case 9: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					GotoXY(x + 2, y); cout << char(178);
+					break;
+				}
+			case 10: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x, y); cout << char(178);
+					break;
+				}
+			case 11: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x, y + 2); cout << char(178);
+					break;
+				}
+			case 12: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					GotoXY(x + 2, y + 2); cout << char(178);
+					break;
+				}
+			case 13: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					break;
+				}
+			case 14: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					break;
+				}
+			case 15: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 2, y + 1); cout << char(178);
+					break;
+				}
+			case 16: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					break;
+				}
+			case 17: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x + 1, y + 2); cout << char(178);
+					GotoXY(x + 2, y + 2); cout << char(178);
+					break;
+				}
+			case 18: 
+				{ 
+					GotoXY(x + 1, y + 1); cout << char(178);
+					GotoXY(x + 1, y); cout << char(178);
+					GotoXY(x, y + 1); cout << char(178);
+					GotoXY(x, y + 2); cout << char(178);
+					break;
+				}
+		}
+}
 
 //============================================================
 
@@ -1012,6 +1170,7 @@ int main()
 {
     ArrayReset();
 	khung();
+	NextPiece = Random(18);
 
 	// Print variables (once)
 	GotoXY(65, 1); cout << "X = ";
@@ -1106,7 +1265,8 @@ int main()
 		{
 			tetrominoLocX = Random(16) + 2;
 			tetrominoLocY = 1;
-			CurrentState = Random(18);
+			CurrentState = NextPiece;
+			NextPiece = Random(18);
 			GotoXY(0, 0);
 			khung();
 			Score += CheckFullRow() * 10;
@@ -1119,6 +1279,7 @@ int main()
 			//Print next piece
 			GotoXY(27, 2);
 			cout << "Next piece";
+			PrintNextPiece(30, 4);
 			
 
 			// Print array
@@ -1144,6 +1305,7 @@ int main()
 		{
 			tetrominoLocY += 1;
 			DelayTime = 0;
+			
 			PrintArray(1, 1);
 			PrintTetromino();
 			
