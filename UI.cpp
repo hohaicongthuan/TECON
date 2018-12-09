@@ -14,7 +14,6 @@ void Menu1(void);// vẽ hàm highlight chữ New Game
 void Menu2(void);// vẽ hàm highlight chữ Help
 void Menu3(void);// vẽ hàm highlight chữ Credit
 void Menu4(void);// vẽ hàm highlight chữ Exit
-void Menu1(void); // hàm vẽ Menu với option 1 đang được chọn
 void gameover(void); // hàm vẽ giao diện kết thúc màn chơi
 //char a[50][50];
 
