@@ -5,12 +5,18 @@
 
 using namespace std;
 
-void gotoxy(int x,int y);
-void first_ui(int);
-void second_ui(int);
-void khung(int);
-void gameover(int);
-char a[50][50];
+//mục lục hàm
+void gotoxy(int x,int y); //hàm di chuyển con trỏ đến vị trí (x,y)
+void khung(void); // hàm vẽ khung
+void welcome(void); // hàm vẽ  giao diện vào game
+void MenuLighting(void); //hàm chọn các option trong menu
+void Menu1(void);// vẽ hàm highlight chữ New Game
+void Menu2(void);// vẽ hàm highlight chữ Help
+void Menu3(void);// vẽ hàm highlight chữ Credit
+void Menu4(void);// vẽ hàm highlight chữ Exit
+void Menu1(void); // hàm vẽ Menu với option 1 đang được chọn
+void gameover(void); // hàm vẽ giao diện kết thúc màn chơi
+//char a[50][50];
 
 //ham gotoxy
 void gotoxy(int x,int y)
@@ -20,8 +26,42 @@ void gotoxy(int x,int y)
     SetConsoleCursorPosition(hStdout,position ) ;
 }
 
+void khung(void)
+{
+    //hàng đầu tiên
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << char(201);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(203);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(187) << endl;
+
+    //hàng thứ 2 đến hàng thứ 19
+    for(int j = 1; j <= 20; ++j)
+    {
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186) << endl;
+    }
+
+    //hàng cuối cùng
+    cout << char(200);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(202);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(188) << endl;
+}
+
 //giao dien welcome
-void first_ui(int)
+void welcome(void)
 {
     //hàng đầu tiên
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
@@ -181,40 +221,90 @@ void first_ui(int)
 
 }
 
-//giao dien menu
-void second_ui(int)
+void MenuLighting(void)
+{
+    char key;
+    int ASCIIValue;
+    int dem = 1;
+
+    while(1)
+    {
+        if(kbhit())
+        {
+            key = getch();
+            ASCIIValue = key;
+            if(ASCIIValue == 97) dem--;
+            if(ASCIIValue == 100) dem++;
+            if(dem == 1) Menu1();
+            if(dem == 2) Menu2();
+            if(dem == 3) Menu3();
+            if(dem == 4) Menu4();
+        }
+    }
+}
+
+//giao dien menu1
+void Menu1(void)
 {
     system("cls");
-    //hàng đầu tiên
+    khung();
+
+    //cac option trong menu
+    gotoxy(7,6);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "New game";
+    gotoxy(7,9);
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
-    cout << char(201);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(203);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(187) << endl;
+    cout << "Help";
+    gotoxy(7,12);
+    cout << "Credit";
+    gotoxy(7,15);
+    cout << "Exit";
+     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+}
 
-    //hàng thứ 2 đến hàng thứ 19
-    for(int j = 1; j <= 20; ++j)
-    {
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186) << endl;
-    }
+void Menu2(void)
+{
+    system("cls");
+    khung();
 
-    //hàng cuối cùng
-    cout << char(200);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(202);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(188) << endl;
+    //cac option trong menu
+    gotoxy(7,6);
+    cout << "New game";
+    gotoxy(7,9);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Help";
+    gotoxy(7,12);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Credit";
+    gotoxy(7,15);
+    cout << "Exit";
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+}
+
+void Menu3(void)
+{
+    system("cls");
+    khung();
+
+    //cac option trong menu
+    gotoxy(7,6);
+    cout << "New game";
+    gotoxy(7,9);
+    cout << "Help";
+    gotoxy(7,12);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Credit";
+    gotoxy(7,15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Exit";
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+}
+
+void Menu4(void)
+{
+    system("cls");
+    khung();
 
     //cac option trong menu
     gotoxy(7,6);
@@ -224,45 +314,12 @@ void second_ui(int)
     gotoxy(7,12);
     cout << "Credit";
     gotoxy(7,15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
     cout << "Exit";
-}
-
-void khung(int)
-{
-    system("cls");
-    //hàng đầu tiên
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
-    cout << char(201);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(203);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(187) << endl;
-
-    //hàng thứ 2 đến hàng thứ 19
-    for(int j = 1; j <= 20; ++j)
-    {
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186) << endl;
-    }
-
-    //hàng cuối cùng
-    cout << char(200);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(202);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(188) << endl;
 }
 
-void gameover(int)
+void gameover(void)
 {
     //vẽ khung
     //hàng đầu tiên
@@ -440,6 +497,27 @@ void gameover(int)
 
 }
 
+/*
+    khung(1);
+    int dem = 0;
+    gotoxy (22,2); cout << "HOW TO PLAY:";
+    gotoxy (22,4); cout << "Your objective is to";
+    gotoxy (22,5); cout << "earn highest scores as";
+    gotoxy (22,6); cout << "long as possible by";
+    gotoxy (22,7); cout << "destroying Tetromino";
+    gotoxy (22,8); cout << "blocks.";
+    gotoxy (22,18); cout << "Press d to continue";
+
+    gotoxy (22,2); cout << "To destroy the";
+    gotoxy (22,3); cout << "blocks, please place";
+    gotoxy (22,4); cout << "the blocks to make a";
+    gotoxy (22,5); cout << "full blocks row, and";
+    gotoxy (22,6); cout << "then the blocks row";
+    gotoxy (22,7); cout << "will be disappeared";
+    gotoxy (22,8); cout << "and you will earn ";
+    gotoxy (22,9); cout << "scores.";
+    gotoxy (22,18); cout << "Press d to continue";
+*/
 
 int main()
 {
@@ -449,11 +527,12 @@ int main()
 	Info.dwSize = 20;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
 
-//    first_ui(1);
-//    second_ui(1);
+    welcome();
 //    getch();
-//    khung(1);
-    gameover(1);
+    Menu1();
+    MenuLighting();
+//    khung();
+//    gameover();
     gotoxy(0,22);
     return 0;
 }
