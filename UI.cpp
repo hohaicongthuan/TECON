@@ -10,7 +10,7 @@ void gotoxy(int x,int y); //hàm di chuyển con trỏ đến vị trí (x,y)
 void khung(void); // hàm vẽ khung
 void welcome(void); // hàm vẽ  giao diện vào game
 void MenuLighting(void); //hàm chọn các option trong menu
-void Menu1(void);// vẽ hàm highlight chữ New Game
+void KhungMenu(void);// vẽ hàm highlight chữ New Game
 void Menu2(void);// vẽ hàm highlight chữ Help
 void Menu3(void);// vẽ hàm highlight chữ Credit
 void Menu4(void);// vẽ hàm highlight chữ Exit
@@ -28,6 +28,7 @@ void gotoxy(int x,int y)
 void khung(void)
 {
     //hàng đầu tiên
+    gotoxy(0,0);
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
     cout << char(201);
     for(int i = 1; i <= 20; ++i)
@@ -222,6 +223,8 @@ void welcome(void)
 
 void MenuLighting(void)
 {
+    system("cls");
+    KhungMenu();
     char key;
     int ASCIIValue;
     int dem = 1;
@@ -234,20 +237,67 @@ void MenuLighting(void)
             ASCIIValue = key;
             if(ASCIIValue == 97) dem--;
             if(ASCIIValue == 100) dem++;
-            if(dem == 1) Menu1();
-            if(dem == 2) Menu2();
-            if(dem == 3) Menu3();
-            if(dem == 4) Menu4();
+            if(dem < 1)
+            {
+                dem = 1;
+                continue;
+            }
+            if(dem > 4)
+            {
+                dem = 4;
+                continue;
+            }
+            if(dem == 1)
+            {
+                gotoxy(7,6);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "New game";
+                gotoxy(7,9);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "Help";
+            }
+            if(dem == 2)
+            {
+                gotoxy(7,6);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "New game";
+                gotoxy(7,9);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "Help";
+                gotoxy(7,12);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "Credit";
+            }
+            if(dem == 3)
+            {
+                gotoxy(7,9);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "Help";
+                gotoxy(7,12);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "Credit";
+                gotoxy(7,15);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "Exit";
+            }
+            if(dem == 4)
+            {
+                gotoxy(7,12);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+                cout << "Credit";
+                gotoxy(7,15);
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                cout << "Exit";
+                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+            }
         }
     }
 }
 
 //giao dien menu1
-void Menu1(void)
+void KhungMenu(void)
 {
-    system("cls");
     khung();
-
     //cac option trong menu
     gotoxy(7,6);
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
@@ -259,14 +309,11 @@ void Menu1(void)
     cout << "Credit";
     gotoxy(7,15);
     cout << "Exit";
-     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
 }
 
 void Menu2(void)
 {
-    system("cls");
     khung();
-
     //cac option trong menu
     gotoxy(7,6);
     cout << "New game";
@@ -283,9 +330,7 @@ void Menu2(void)
 
 void Menu3(void)
 {
-    system("cls");
     khung();
-
     //cac option trong menu
     gotoxy(7,6);
     cout << "New game";
@@ -302,9 +347,7 @@ void Menu3(void)
 
 void Menu4(void)
 {
-    system("cls");
     khung();
-
     //cac option trong menu
     gotoxy(7,6);
     cout << "New game";
@@ -528,7 +571,7 @@ int main()
 
     welcome();
 //    getch();
-    Menu1();
+//
     MenuLighting();
 //    khung();
 //    gameover();
