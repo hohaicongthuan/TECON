@@ -50,8 +50,6 @@ bool	NewTetromino = true,
 		CanRotate = true;
 //============================================================
 
-//============================================================
-
 int Random(int n) // Generate a random number
 {
 	srand((int)time(0));
@@ -100,6 +98,17 @@ void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ
             cout << "\n";
             GotoXY(x, y++);
         }
+}
+
+void ArrayDebug() // Print the actual array storing information
+{
+	int t = 1;
+	GotoXY(44, t);
+	for (int i = 0; i <= 22; i++)
+	{
+		for (int j = 0; j < 22; j++) cout << tetris[j][i];
+		GotoXY(44, t++);
+	}
 }
 
 // Check full rows
@@ -1167,6 +1176,63 @@ void PrintNextPiece(int x, int y)
 		}
 }
 
+void Refresh()
+{
+	PrintArray(1, 1);
+	PrintTetromino();
+				
+	// Print out the key that user pressed
+	GotoXY(0, 22);
+	cout << "Key pressed: ";
+
+	PrintVariables();
+}
+
+void InputProcess() // Function processing user's input
+{
+	if (ASCIIValue == 97) // Moves current tetromino to the left if the 'a' key is pressed
+	{
+		if (CanMoveLeft) tetrominoLocX--;
+		Refresh();
+	}
+	if (ASCIIValue == 100) // Moves current tetromino to the right if the 'd' key is pressed
+	{
+		if (CanMoveRight) tetrominoLocX++;
+		Refresh();
+	}
+	if (ASCIIValue == 115) // Moves current tetromino down if the 's' key is pressed
+	{
+		if (CanMoveDown) if (tetrominoLocY < 20) tetrominoLocY++;
+		Refresh();
+	}
+	if (ASCIIValue == 119) // Change state of a tetromino when 'w' key is pressed
+	{
+		if (CanRotate)
+			switch (CurrentState)
+			{
+				case 1: { CurrentState = 2; break; }
+				case 2: { CurrentState = 1; break; }
+				case 3: { CurrentState = 4; break; }
+				case 4: { CurrentState = 5; break; }
+				case 5: { CurrentState = 6; break; }
+				case 6: { CurrentState = 3; break; }
+				case 7: { CurrentState = 8; break; }
+				case 8: { CurrentState = 9; break; }
+				case 9: { CurrentState = 10; break; }
+				case 10: { CurrentState = 7; break; }
+				case 11: { CurrentState = 12; break; }
+				case 12: { CurrentState = 11; break; }
+				case 13: { CurrentState = 14; break; }
+				case 14: { CurrentState = 15; break; }
+				case 15: { CurrentState = 16; break; }
+				case 16: { CurrentState = 13; break; }
+				case 17: { CurrentState = 18; break; }
+				case 18: { CurrentState = 17; break; }
+			}
+		Refresh();
+	}		
+}
+
 //============================================================
 //UI
 
@@ -1562,9 +1628,9 @@ int main()
     ArrayReset();
 	khung();
 	NextPiece = Random(18);
-	NoCursorType();
+	NoCursorType(); // Hide console cursor
 
-	// Print variables (once)
+	// Print once
 	GotoXY(67, 1); cout << "X = ";
 	GotoXY(67, 2); cout << "Y = ";
 	GotoXY(67, 3); cout << "MoveR = ";
@@ -1579,86 +1645,9 @@ int main()
 		{
 			key = getche();
 			ASCIIValue = key;
-			
-			//===============================================================
 			// Statements process user's input
-
 			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
-			if (ASCIIValue == 97) 
-			{
-				if (CanMoveLeft) tetrominoLocX -= 1;
-				
-				PrintArray(1, 1);
-				PrintTetromino();
-				
-				// Print out the key that user pressed
-				GotoXY(0, 22);
-				cout << "Key pressed: ";
-
-				PrintVariables();
-			}
-			if (ASCIIValue == 100) 
-			{
-				if (CanMoveRight) tetrominoLocX += 1;
-				
-				PrintArray(1, 1);
-				PrintTetromino();
-
-				// Print out the key that user pressed
-				GotoXY(0, 22);
-				cout << "Key pressed: ";
-
-				PrintVariables();
-			}
-			if (ASCIIValue == 115) 
-			{
-				if (CanMoveDown) if (tetrominoLocY < 20) tetrominoLocY += 1;
-				
-				PrintArray(1, 1);
-				PrintTetromino();
-
-				// Print out the key that user pressed
-				GotoXY(0, 22);
-				cout << "Key pressed: ";
-
-				PrintVariables();
-			}
-			if (ASCIIValue == 119) // Change state of a tetromino when 'W' key is pressed
-				{
-					if (CanRotate)
-						switch (CurrentState)
-						{
-							case 1: { CurrentState = 2; break; }
-							case 2: { CurrentState = 1; break; }
-							case 3: { CurrentState = 4; break; }
-							case 4: { CurrentState = 5; break; }
-							case 5: { CurrentState = 6; break; }
-							case 6: { CurrentState = 3; break; }
-							case 7: { CurrentState = 8; break; }
-							case 8: { CurrentState = 9; break; }
-							case 9: { CurrentState = 10; break; }
-							case 10: { CurrentState = 7; break; }
-							case 11: { CurrentState = 12; break; }
-							case 12: { CurrentState = 11; break; }
-							case 13: { CurrentState = 14; break; }
-							case 14: { CurrentState = 15; break; }
-							case 15: { CurrentState = 16; break; }
-							case 16: { CurrentState = 13; break; }
-							case 17: { CurrentState = 18; break; }
-							case 18: { CurrentState = 17; break; }
-						}
-					
-					PrintArray(1, 1);
-					PrintTetromino();
-
-					// Print out the key that user pressed
-					GotoXY(0, 22);
-					cout << "Key pressed: ";
-
-					PrintVariables();
-				}
-			//================================================================
-				
+			InputProcess();
 		}
 
 		// Statement checks whether a new tetromino should be generated
@@ -1668,29 +1657,13 @@ int main()
 			tetrominoLocY = 1;
 			CurrentState = NextPiece;
 			NextPiece = Random(18);
-			Score += CheckFullRow() * 10;
+			Score += CheckFullRow() * 5;
 			NewTetromino = false;
 
-			// Print array
-			int t = 1;
-			GotoXY(44, t);
-			for (int i = 0; i <= 22; i++)
-				{
-					for (int j = 0; j < 22; j++) cout << tetris[j][i];
-					GotoXY(44, t++);
-				}
-			
-			PrintArray(1, 1);
-			PrintTetromino();
-
-			// Print out the key that user pressed
-			GotoXY(0, 22);
-			cout << "Key pressed: ";
-
-			PrintVariables();
-
+			ArrayDebug();
 			GotoXY(0, 0);
 			khung();
+			Refresh();
 
 			// Print score
 			GotoXY(23, 12);
@@ -1702,19 +1675,14 @@ int main()
 			PrintNextPiece(30, 4);
 		}
 		
+		// Statement controls the dropping speed of tetrominoes
+		// The bigger the value, the slower the tetrominoes will drop
 		if (DelayTime == 10000)
 		{
-			tetrominoLocY += 1;
+			tetrominoLocY++;
 			DelayTime = 0;
 			
-			PrintArray(1, 1);
-			PrintTetromino();
-			
-			// Print out the key that user pressed
-			GotoXY(0, 22);
-			cout << "Key pressed: ";
-
-			PrintVariables();
+			Refresh();
 		}
 		else DelayTime++;
 
@@ -1728,7 +1696,7 @@ int main()
 				NewTetromino = true;
 			}
 
-		GotoXY(13, 22);
+		GotoXY(13, 22); // Move console cursor to "Key pressed: " position
 	}
 	//cin.get();
 }
