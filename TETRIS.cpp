@@ -88,6 +88,7 @@ void InputProcess();
 void first_ui(int);
 void second_ui(int);
 void gameover(int);
+void Colour(int n);
 
 //=============================================================
 
@@ -1237,6 +1238,24 @@ void InputProcess() // Function processing user's input
 			}
 		Refresh();
 	}		
+}
+
+void Colour(int n) // Function that changes console text colour
+{
+    // 1 is bright red		2 is bright green		3 is bright blue
+	// 4 is bright pink		5 is bright yellow		6 is white
+	
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    switch (n)
+    {
+        case 1: { SetConsoleTextAttribute(hConsole, 12); break; }
+        case 2: { SetConsoleTextAttribute(hConsole, 10); break; }
+        case 3: { SetConsoleTextAttribute(hConsole, 9); break; }
+        case 4: { SetConsoleTextAttribute(hConsole, 13); break; }
+        case 5: { SetConsoleTextAttribute(hConsole, 14); break; }
+        case 6: { SetConsoleTextAttribute(hConsole, 15); break; }
+    }
+
 }
 
 //============================================================
