@@ -50,168 +50,48 @@ bool	NewTetromino = true,
 		CanRotate = true;
 //============================================================
 
-int Random(int n) // Generate a random number
-{
-	srand((int)time(0));
-	int r = (rand() % n);
-	return r;
-}
-
-void GotoXY(int x, int y) // Hàm di chuyển con trỏ console
-{
-	COORD p = {x, y};
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
-}
-
-void NoCursorType() // Hàm ẩn con trỏ console
-{
-	CONSOLE_CURSOR_INFO Info;
-	Info.bVisible = FALSE;
-	Info.dwSize = 20;
-	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
-}
-
-void ArrayReset()
-{
-    for (int i = 0; i <= 30; i++)
-        for (int j = 0; j <= 30; j++)
-            tetris[j][i] = 0;
-
-	for (int i = 0; i <= 21; i++)
-	{
-		tetris[i][22] = 1;
-		tetris[21][i] = 1;
-		tetris[0][i] = 1;
-	}
-}
-
-void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ độ (x, y)
-{
-    GotoXY(x, y);
-    for (int i = 1; i <= 21; i++)
-        {
-            for (int j = 1; j <= 20; j++)
-            {
-                if (tetris[j][i] == 0) cout << " ";
-                else if (tetris[j][i] == 1) cout << char(178);
-            }
-            cout << "\n";
-            GotoXY(x, y++);
-        }
-}
-
-void ArrayDebug() // Print the actual array storing information
-{
-	int t = 1;
-	GotoXY(44, t);
-	for (int i = 0; i <= 22; i++)
-	{
-		for (int j = 0; j < 22; j++) cout << tetris[j][i];
-		GotoXY(44, t++);
-	}
-}
-
-// Check full rows
-// and delete full rows
-// and return a value of deleted rows
-
-void DeleteRow(int n)
-{
-    for (int i = 1; i <= 20; i++) tetris[i][n] = 0;
-}
-
-void MoveAllRowAbove(int n)
-{
-    for (int i = n; i >= 1; i--)
-    {
-        for (int j = 20; j >= 1; j--)
-        {
-            tetris[j][i] = tetris[j][i - 1];
-        }
-    }
-}
-
-int CheckFullRow() // Function that checks and returns a number of full rows
-{
-    int FullRow = 0;
-	bool t = false;
-    for (int i = 1; i <= 21; i++)
-	{
-		for (int j = 1; j <= 21; j++)
-		{
-			if (tetris[j][i] == 0) 
-			{
-				t = false;
-				break;
-			}
-			t = true;
-		}
-		if (t)
-		{
-			FullRow++;
-			DeleteRow(i);
-			MoveAllRowAbove(i);
-		}
-	}
-	return FullRow;
-}
-
-void PrintVariables()
-{
-	GotoXY(71, 1);
-	cout << tetrominoLocX << " ";
-	GotoXY(71, 2);
-	cout << tetrominoLocY << " ";
-	GotoXY(75, 3);
-	if (CanMoveRight) cout << "True "; else cout << "False";
-	GotoXY(75, 4);
-	if (CanMoveLeft) cout << "True "; else cout << "False";
-	GotoXY(75, 5);
-	if (CanMoveDown) cout << "True "; else cout << "False";
-	GotoXY(73, 6);
-	if (CanRotate) cout << "True "; else cout << "False";
-	GotoXY(75, 7);
-	cout << CurrentState << " ";
-}
-
-void khung()
-{
-    // system("cls");
-    // hàng đầu tiên
-    // SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
-    cout << char(201);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(203);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(187) << endl;
-
-    //hàng thứ 2 đến hàng thứ 19
-    for(int j = 1; j <= 20; ++j)
-    {
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186) << endl;
-    }
-
-    //hàng cuối cùng
-    cout << char(200);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(202);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(188) << endl;
-}
+// Functions define
+int Random(int n);
+void GotoXY(int x, int y);
+void NoCursorType();
+void ArrayReset();
+void PrintArray(int x, int y);
+void ArrayDebug();
+void DeleteRow(int n);
+void MoveAllRowAbove(int n);
+int CheckFullRow();
+void PrintVariables();
+void khung();
+void BlockI1(int x, int y);
+void BlockI2(int x, int y);
+void BlockJ1(int x, int y);
+void BlockJ2(int x, int y);
+void BlockJ3(int x, int y);
+void BlockJ4(int x, int y);
+void BlockL1(int x, int y);
+void BlockL2(int x, int y);
+void BlockL3(int x, int y);
+void BlockL4(int x, int y);
+void BlockO(int x, int y);
+void BlockS1(int x, int y);
+void BlockS2(int x, int y);
+void BlockT1(int x, int y);
+void BlockT2(int x, int y);
+void BlockT3(int x, int y);
+void BlockT4(int x, int y);
+void BlockZ1(int x, int y);
+void BlockZ2(int x, int y);
+void PrintTetromino();
+void PrintNextPiece(int x, int y);
+void Refresh();
+void InputProcess();
+void first_ui(int);
+void second_ui(int);
+void gameover(int);
 
 //=============================================================
 
-// Hàm vẽ các Tetromino
+// Functions that draw Tetrominoes
 
 void BlockI1(int x, int y)
 {
@@ -1176,6 +1056,132 @@ void PrintNextPiece(int x, int y)
 		}
 }
 
+//=============================================================
+
+int Random(int n) // Generate a random number
+{
+	srand((int)time(0));
+	int r = (rand() % n);
+	return r;
+}
+
+void GotoXY(int x, int y) // Hàm di chuyển con trỏ console
+{
+	COORD p = {x, y};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
+}
+
+void NoCursorType() // Hàm ẩn con trỏ console
+{
+	CONSOLE_CURSOR_INFO Info;
+	Info.bVisible = FALSE;
+	Info.dwSize = 20;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
+}
+
+void ArrayReset()
+{
+    for (int i = 0; i <= 30; i++)
+        for (int j = 0; j <= 30; j++)
+            tetris[j][i] = 0;
+
+	for (int i = 0; i <= 21; i++)
+	{
+		tetris[i][22] = 1;
+		tetris[21][i] = 1;
+		tetris[0][i] = 1;
+	}
+}
+
+void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ độ (x, y)
+{
+    GotoXY(x, y);
+    for (int i = 1; i <= 21; i++)
+        {
+            for (int j = 1; j <= 20; j++)
+            {
+                if (tetris[j][i] == 0) cout << " ";
+                else if (tetris[j][i] == 1) cout << char(178);
+            }
+            cout << "\n";
+            GotoXY(x, y++);
+        }
+}
+
+void ArrayDebug() // Print the actual array storing information
+{
+	int t = 1;
+	GotoXY(44, t);
+	for (int i = 0; i <= 22; i++)
+	{
+		for (int j = 0; j < 22; j++) cout << tetris[j][i];
+		GotoXY(44, t++);
+	}
+}
+
+// Check full rows
+// and delete full rows
+// and return a value of deleted rows
+
+void DeleteRow(int n)
+{
+    for (int i = 1; i <= 20; i++) tetris[i][n] = 0;
+}
+
+void MoveAllRowAbove(int n)
+{
+    for (int i = n; i >= 1; i--)
+    {
+        for (int j = 20; j >= 1; j--)
+        {
+            tetris[j][i] = tetris[j][i - 1];
+        }
+    }
+}
+
+int CheckFullRow() // Function that checks and returns a number of full rows
+{
+    int FullRow = 0;
+	bool t = false;
+    for (int i = 1; i <= 21; i++)
+	{
+		for (int j = 1; j <= 21; j++)
+		{
+			if (tetris[j][i] == 0) 
+			{
+				t = false;
+				break;
+			}
+			t = true;
+		}
+		if (t)
+		{
+			FullRow++;
+			DeleteRow(i);
+			MoveAllRowAbove(i);
+		}
+	}
+	return FullRow;
+}
+
+void PrintVariables()
+{
+	GotoXY(71, 1);
+	cout << tetrominoLocX << " ";
+	GotoXY(71, 2);
+	cout << tetrominoLocY << " ";
+	GotoXY(75, 3);
+	if (CanMoveRight) cout << "True "; else cout << "False";
+	GotoXY(75, 4);
+	if (CanMoveLeft) cout << "True "; else cout << "False";
+	GotoXY(75, 5);
+	if (CanMoveDown) cout << "True "; else cout << "False";
+	GotoXY(73, 6);
+	if (CanRotate) cout << "True "; else cout << "False";
+	GotoXY(75, 7);
+	cout << CurrentState << " ";
+}
+
 void Refresh()
 {
 	PrintArray(1, 1);
@@ -1234,7 +1240,42 @@ void InputProcess() // Function processing user's input
 }
 
 //============================================================
-//UI
+//User Interface
+
+void khung()
+{
+    // system("cls");
+    // hàng đầu tiên
+    // SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << char(201);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(203);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(187) << endl;
+
+    //hàng thứ 2 đến hàng thứ 19
+    for(int j = 1; j <= 20; ++j)
+    {
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186);
+        for(int i = 1; i <= 20; ++i)
+            cout << " ";
+        cout << char(186) << endl;
+    }
+
+    //hàng cuối cùng
+    cout << char(200);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(202);
+    for(int i = 1; i <= 20; ++i)
+        cout << char(205);
+    cout << char(188) << endl;
+}
 
 //giao dien welcome
 void first_ui(int)
@@ -1623,7 +1664,7 @@ void gameover(int)
 
 //============================================================
 
-int main()
+int main() // Main function
 {
     ArrayReset();
 	khung();
