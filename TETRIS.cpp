@@ -1129,7 +1129,7 @@ void ArrayDebug() // Print the actual array storing information
 					case 5: { Colour(5); cout << tetris[j][i]; break; }
 					case 6: { Colour(6); cout << tetris[j][i]; break; }
 				}
-		Colour(6);
+		Colour(6); // Set the text colour back to white
 		GotoXY(44, t++);
 	}
 	
@@ -1718,9 +1718,9 @@ void gameover(int)
 int main() // Main function
 {
     ArrayReset();
-	Colour(6);
+	Colour(6); // Set default text colour to white
 	khung();
-	NextPiece = Random(18);
+	NextPiece = Random(18); // Generate the first tetromino
 	NoCursorType(); // Hide console cursor
 
 	// Print once
