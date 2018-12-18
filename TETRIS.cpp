@@ -64,7 +64,17 @@ void DeleteRow(int n);
 void MoveAllRowAbove(int n);
 int CheckFullRow();
 void PrintVariables();
-void khung();
+void khung(); // hàm vẽ khung
+void xoakhungbenphai(); //hàm xóa bên trong khung bên phải, thay vì vẽ lại cả khung thì chỉ cần xóa phần bên phải
+void welcome(); // hàm vẽ  giao diện vào game
+void khungmenu();// hàm vẽ khung ban đầu khi mới vào giao diện menu
+void khungmenu1();// hàm highlight chữ New game
+void khungmenu2();// hàm highlight chữ Help
+void khungmenu3();// hàm highlight chữ Credit
+void khungmenu4();// hàm highlight chữ Exit
+void help(); //hàm để chọn các trang help
+void credit(); // hàm viết những người lập trình
+void gameover(); // hàm vẽ giao diện kết thúc màn chơi
 
 void BlockI1(int x, int y);		void BlockI2(int x, int y);
 void BlockJ1(int x, int y);		void BlockJ2(int x, int y);
@@ -1328,8 +1338,18 @@ void khung()
     cout << char(188) << endl;
 }
 
+void xoakhungbenphai()
+{
+    for(int j = 1; j <= 20; j++)
+    {
+        GotoXY(22,j);
+        for(int i = 22; i <= 41; i++)
+            cout << " ";
+    }
+}
+
 //giao dien welcome
-void first_ui(int)
+void welcome()
 {
     //hàng đầu tiên
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
@@ -1489,45 +1509,16 @@ void first_ui(int)
 
 }
 
-//giao dien menu
-void second_ui(int)
+//giao dien menu1
+void khungmenu()
 {
-    system("cls");
-    //hàng đầu tiên
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
-    cout << char(201);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(203);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(187) << endl;
-
-    //hàng thứ 2 đến hàng thứ 19
-    for(int j = 1; j <= 20; ++j)
-    {
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186) << endl;
-    }
-
-    //hàng cuối cùng
-    cout << char(200);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(202);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(188) << endl;
-
+    khung();
     //cac option trong menu
     GotoXY(7,6);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
     cout << "New game";
     GotoXY(7,9);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
     cout << "Help";
     GotoXY(7,12);
     cout << "Credit";
@@ -1535,7 +1526,91 @@ void second_ui(int)
     cout << "Exit";
 }
 
-void gameover(int)
+void khungmenu1()
+{
+    GotoXY(7,6);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "New game";
+    GotoXY(7,9);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Help";
+}
+
+void khungmenu2()
+{
+    GotoXY(7,6);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "New game";
+    GotoXY(7,9);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Help";
+    GotoXY(7,12);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Credit";
+}
+
+void khungmenu3()
+{
+    GotoXY(7,9);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Help";
+    GotoXY(7,12);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Credit";
+    GotoXY(7,15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Exit";
+}
+
+void khungmenu4()
+{
+    GotoXY(7,12);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+    cout << "Credit";
+    GotoXY(7,15);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+    cout << "Exit";
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+}
+
+void help()
+{
+    xoakhungbenphai();
+    GotoXY (22,2); cout << "Use A, S, D, W keys";
+    GotoXY (22,3); cout << "to move left, down,";
+    GotoXY (22,4); cout << "right & rotate the ";
+    GotoXY (22,5); cout << "blocks. ";
+    GotoXY (22,7); cout << "Put the blocks in ";
+    GotoXY (22,8); cout << "full rows to earn";
+    GotoXY (22,9); cout << "score.";
+    GotoXY (22,11); cout << "Level up w/ every";
+    GotoXY (22,12); cout << "100 score earned.";
+    GotoXY (22,14); cout << "Blocks' falling ";
+    GotoXY (22,15); cout << "speed increase as ";
+    GotoXY (22,16); cout << "the level increase.";
+
+    GotoXY (22,19); cout << "*Press Esc to";
+    GotoXY (22,20); cout << "control menu";
+}
+
+void credit()
+{
+    xoakhungbenphai();
+    GotoXY(22,2); cout << "  This is project";
+    GotoXY(22,3); cout << "   homework in a";
+    GotoXY(22,4); cout << "  university class.";
+    GotoXY(22,6); cout << "Class:";
+    GotoXY(22,7); cout << "IT001.J13.MTCL - VN";
+    GotoXY(22,9); cout << "Programer:";
+    GotoXY(22,10); cout << "Ho Hai Cong Thuan";
+    GotoXY(22,11); cout << "ID: ";
+    GotoXY(22,12); cout << "Ha Kieu Trang";
+    GotoXY(22,13); cout << "ID: 18521522";
+    GotoXY (22,19); cout << "*Press Esc to";
+    GotoXY (22,20); cout << "control menu";
+}
+
+void gameover()
 {
     //vẽ khung
     //hàng đầu tiên
