@@ -15,13 +15,9 @@ void khungmenu1(void);// hàm highlight chữ New game
 void khungmenu2(void);// hàm highlight chữ Help
 void khungmenu3(void);// hàm highlight chữ Credit
 void khungmenu4(void);// hàm highlight chữ Exit
-void menulighting(void); //hàm chọn các option trong menu
 void help(void); //hàm để chọn các trang help
-void help1(void); //hàm viết trang help thứ nhất
-void help2(void); //hàm viết trang help thứ hai
 void credit(void); // hàm viết những người lập trình
 void gameover(void); // hàm vẽ giao diện kết thúc màn chơi
-//char a[50][50];
 
 //ham gotoxy
 void gotoxy(int x,int y)
@@ -300,133 +296,28 @@ void khungmenu4(void)
     cout << "Exit";
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
 }
-//-----------------------------------------------------------------------------------Menu
-void menulighting(void)
-{
-    system("cls");
-    khungmenu();
-    char key;
-    int ASCIIValue;
-    int dem = 1;
-
-    while(1)
-    {
-        if(kbhit())
-        {
-            key = getch();
-            ASCIIValue = key;
-            if(ASCIIValue == 119) dem--; //coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
-            if(ASCIIValue == 115) dem++;
-            if(dem < 1) //chặn highlight nếu như đã ở trên cùng mà vẫn bấm nút lên
-            {
-                dem = 1;
-                continue;
-            }
-            if(dem > 4) // chặn highlight nếu như đã ở dưới cùng mà vẫn bấm nút xuống
-            {
-                dem = 4;
-                continue;
-            }
-            if(dem == 1)
-            {
-                khungmenu1(); //highlight chữ New game
-                //link phần của ông vào đây :3
-            }
-            if(dem == 2)
-            {
-                khungmenu2(); //highlight chữ Help
-                if(ASCIIValue == 13) help(); // nhảy vô giao diện help
-                if(ASCIIValue == 27) menulighting(); //thoát giao diện help
-            }
-            if(dem == 3)
-            {
-                khungmenu3(); //highlight chữ Credit
-                if(ASCIIValue == 13) credit(); //nhảy vô giao diện credit
-                if(ASCIIValue == 27) menulighting(); //thoát giao diện credit
-            }
-            if(dem == 4)
-            {
-                khungmenu4(); //highlight chữ Exit
-                if(ASCIIValue == 13) break; //thoát khỏi game
-            }
-        }
-    }
-}
 
 void help(void)
 {
-    khung();
-    help1();
-    char key;
-    int ASCIIValue;
-    int dem = 1;
-    while(1)
-    {
-        if(kbhit())
-        {
-            key = getch();
-            ASCIIValue = key;
-            if(ASCIIValue == 97) dem--;
-            if(ASCIIValue == 100) dem++;
-            if(dem < 1) //chặn highlight nếu như đã ở trên cùng mà vẫn bấm nút lên
-            {
-                dem = 1;
-                continue;
-            }
-            if(dem > 4) // chặn highlight nếu như đã ở dưới cùng mà vẫn bấm nút xuống
-            {
-                dem = 4;
-                continue;
-            }
-            if(dem == 1)
-            {
-                xoakhungbenphai();
-                help1();
-                if(ASCIIValue == 27) menulighting(); //thoát giao diện help
-            }
-            if(dem == 2)
-            {
-                xoakhungbenphai();
-                help2();
-                if(ASCIIValue == 27) menulighting(); //thoát giao diện credit
-            }
-        }
-    }
-}
-
-void help1(void)
-{
-    gotoxy (22,2); cout << "HOW TO PLAY:";
-    gotoxy (22,4); cout << "Your objective is to";
-    gotoxy (22,5); cout << "earn highest scores";
-    gotoxy (22,6); cout << "as long as possible";
-    gotoxy (22,7); cout << "by destroying";
-    gotoxy (22,8); cout << "Tetromino blocks.";
-    gotoxy (22,17); cout << "*Press d to continue";
-    gotoxy (22,18); cout << "*Press Esc to go";
-    gotoxy (22,19); cout << "back to menu";
-}
-
-void help2(void)
-{
-    gotoxy (22,2); cout << "To destroy the";
-    gotoxy (22,3); cout << "blocks, please place";
-    gotoxy (22,4); cout << "the blocks to make a";
-    gotoxy (22,5); cout << "full blocks row, and";
-    gotoxy (22,6); cout << "then the blocks row";
-    gotoxy (22,7); cout << "will be disappeared";
-    gotoxy (22,8); cout << "and you will earn ";
-    gotoxy (22,9); cout << "scores.";
-    gotoxy (22,17); cout << "*Press d to continue";
-    gotoxy (22,18); cout << "*Press a to go back";
-    gotoxy (22,19); cout << "*Press Esc to go";
-    gotoxy (22,20); cout << "back to menu";
+    xoakhungbenphai();
+    gotoxy (22,2); cout << "Viet phan help cua";
+    gotoxy (22,3); cout << "ong vao day ~";
+    gotoxy (22,4); cout << "";
+    gotoxy (22,5); cout << "";
+    gotoxy (22,6); cout << "";
+    gotoxy (22,7); cout << "";
+    gotoxy (22,8); cout << "";
+    gotoxy (22,9); cout << "";
+    gotoxy (22,17); cout << "";
+    gotoxy (22,18); cout << "";
+    gotoxy (22,19); cout << "*Press Esc to";
+    gotoxy (22,20); cout << "control menu";
 }
 
 //-------------------------------------------------------------------------------
 void credit(void)
 {
-    khung();
+    xoakhungbenphai();
     gotoxy(22,2); cout << "  This is project";
     gotoxy(22,3); cout << "   homework in a";
     gotoxy(22,4); cout << "  university class.";
@@ -437,6 +328,8 @@ void credit(void)
     gotoxy(22,11); cout << "ID: ";
     gotoxy(22,12); cout << "Ha Kieu Trang";
     gotoxy(22,13); cout << "ID: 18521522";
+    gotoxy (22,19); cout << "*Press Esc to";
+    gotoxy (22,20); cout << "control menu";
 }
 
 void gameover(void)
@@ -624,9 +517,61 @@ int main()
 	Info.bVisible = FALSE;
 	Info.dwSize = 20;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
-//    welcome();
-    menulighting();
-//    credit();
+
+	welcome();
+
+	system("cls");
+    khungmenu();
+    char key;
+    int ASCIIValue;
+    int dem = 1;
+    bool disable = false; //để tạm dừng màn hình bên trái
+
+    while(1)
+    {
+        if(kbhit())
+        {
+            key = getch();
+            ASCIIValue = key;
+            if((ASCIIValue == 119)&&(disable == false)) dem--; //coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
+            if((ASCIIValue == 115)&&(disable == false)) dem++;
+            if(ASCIIValue == 13) disable = true;
+            if(ASCIIValue == 27) disable = false;
+            if(dem < 1) //chặn highlight nếu như đã ở trên cùng mà vẫn bấm nút lên
+            {
+                dem = 1;
+                continue;
+            }
+            if(dem > 4) // chặn highlight nếu như đã ở dưới cùng mà vẫn bấm nút xuống
+            {
+                dem = 4;
+                continue;
+            }
+            if(dem == 1)
+            {
+                khungmenu1(); //highlight chữ New game
+                //link phần của ông vào đây :3
+            }
+            if(dem == 2)
+            {
+                khungmenu2(); //highlight chữ Help
+                if(ASCIIValue == 13) help(); // nhảy vô giao diện help
+         //       if(ASCIIValue == 27) disable == false; //thoát giao diện help
+            }
+            if(dem == 3)
+            {
+                khungmenu3(); //highlight chữ Credit
+                if(ASCIIValue == 13) credit(); //nhảy vô giao diện credit
+          //      if(ASCIIValue == 27) disable == false; //thoát giao diện credit
+            }
+            if(dem == 4)
+            {
+                khungmenu4(); //highlight chữ Exit
+                if(ASCIIValue == 13) break; //thoát khỏi game
+            }
+        }
+    }
+
 //    gameover();
     gotoxy(0,22);
     return 0;
