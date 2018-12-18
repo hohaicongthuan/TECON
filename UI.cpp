@@ -300,16 +300,19 @@ void khungmenu4(void)
 void help(void)
 {
     xoakhungbenphai();
-    gotoxy (22,2); cout << "Viet phan help cua";
-    gotoxy (22,3); cout << "ong vao day ~";
-    gotoxy (22,4); cout << "";
-    gotoxy (22,5); cout << "";
-    gotoxy (22,6); cout << "";
-    gotoxy (22,7); cout << "";
-    gotoxy (22,8); cout << "";
-    gotoxy (22,9); cout << "";
-    gotoxy (22,17); cout << "";
-    gotoxy (22,18); cout << "";
+    gotoxy (22,2); cout << "Use A, S, D, W keys";
+    gotoxy (22,3); cout << "to move left, down,";
+    gotoxy (22,4); cout << "right & rotate the ";
+    gotoxy (22,5); cout << "blocks. ";
+    gotoxy (22,7); cout << "Put the blocks in ";
+    gotoxy (22,8); cout << "full rows to earn";
+    gotoxy (22,9); cout << "score.";
+    gotoxy (22,11); cout << "Level up w/ every";
+    gotoxy (22,12); cout << "100 score earned.";
+    gotoxy (22,14); cout << "Blocks' falling ";
+    gotoxy (22,15); cout << "speed increase as ";
+    gotoxy (22,16); cout << "the level increase.";
+
     gotoxy (22,19); cout << "*Press Esc to";
     gotoxy (22,20); cout << "control menu";
 }
