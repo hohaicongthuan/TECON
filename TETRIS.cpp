@@ -17,12 +17,12 @@ using namespace std;
 //============================================================
 
 int tetris[30][30]; // Khai báo mảng
-char a[50][50];
 
-int Score = 0, HighScore = 0,
+int	Score = 0, HighScore = 0,
 	tetrominoLocX = 0, tetrominoLocY = 0, // Tetromino Location X & Y
 	DelayTime = 1, count = 0,
-	ASCIIValue;
+	ASCIIValue,
+	dem = 1;
 
 unsigned short int	CurrentState = 0,
 					NextPiece = 0,
@@ -49,7 +49,8 @@ bool	NewTetromino = true,
 		CanMoveLeft = true,
 		CanMoveDown = true,
 		CanRotate = true,
-		Pause = false;
+		Pause = false,
+		disable = false; //để tạm dừng màn hình bên trái
 //============================================================
 
 // Functions define
