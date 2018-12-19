@@ -1795,11 +1795,6 @@ void gameover()
 
 int main() // Main function
 {
-    // Initialising
-	ArrayReset();
-	Colour(6); // Set default text colour to white
-	khung();
-	NextPiece = Random(18); // Generate the first tetromino
 	NoCursorType(); // Hide console cursor
 
 	// Print Welcome Screen
@@ -1808,25 +1803,20 @@ int main() // Main function
 	system("cls");
     khungmenu();
 
-	// Print once
-	GotoXY(67, 1); cout << "X = ";
-	GotoXY(67, 2); cout << "Y = ";
-	GotoXY(67, 3); cout << "MoveR = ";
-	GotoXY(67, 4); cout << "MoveL = ";
-	GotoXY(67, 5); cout << "MoveD = ";
-	GotoXY(67, 6); cout << "Rot = ";
-	GotoXY(67, 7); cout << "State = ";
-
 	while(1)
     {
         if(kbhit())
         {
             key = getch();
             ASCIIValue = key;
-            if((ASCIIValue == 119)&&(disable == false)) dem--; //coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
-            if((ASCIIValue == 115)&&(disable == false)) dem++;
+            if(ASCIIValue == 119 && disable == false) dem--; //coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
+            if(ASCIIValue == 115 && disable == false) dem++;
             if(ASCIIValue == 13) disable = true;
-            if(ASCIIValue == 27) disable = false;
+            if(ASCIIValue == 27) 
+			{
+				disable = false;
+				xoakhungbenphai();
+			}
             if(dem < 1) //chặn highlight nếu như đã ở trên cùng mà vẫn bấm nút lên
             {
                 dem = 1;
@@ -1842,6 +1832,21 @@ int main() // Main function
                 khungmenu1(); //highlight chữ New game
                 //link phần của ông vào đây :3
 				if (ASCIIValue == 13)
+				{
+					// Initialising
+					ArrayReset();
+					Colour(6); // Set default text colour to white
+					NextPiece = Random(18); // Generate the first tetromino
+					
+					// Print once
+					GotoXY(67, 1); cout << "X = ";
+					GotoXY(67, 2); cout << "Y = ";
+					GotoXY(67, 3); cout << "MoveR = ";
+					GotoXY(67, 4); cout << "MoveL = ";
+					GotoXY(67, 5); cout << "MoveD = ";
+					GotoXY(67, 6); cout << "Rot = ";
+					GotoXY(67, 7); cout << "State = ";
+					
 					while (1) // Infinite loop (or game loop, technically)
 					{
 						if (kbhit()) // Function that checks keys are pressed or not
@@ -1897,11 +1902,16 @@ int main() // Main function
 								ArrayReset();
 								PrintArray(1, 1);
 								Score = 0;
+								NextPiece = Random(18);
 								NewTetromino = true;
 							}
 
 						GotoXY(13, 22); // Move console cursor to "Key pressed: " position
 					}
+					
+					system("cls");
+					khungmenu();
+				}
             }
             if(dem == 2)
             {
