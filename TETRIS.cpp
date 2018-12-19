@@ -22,7 +22,8 @@ int	Score = 0, HighScore = 0,
 	tetrominoLocX = 0, tetrominoLocY = 0, // Tetromino Location X & Y
 	DelayTime = 1, count = 0,
 	ASCIIValue,
-	dem = 1;
+	dem = 1,
+	Level = 1;
 
 unsigned short int	CurrentState = 0,
 					NextPiece = 0,
@@ -50,6 +51,7 @@ bool	NewTetromino = true,
 		CanMoveDown = true,
 		CanRotate = true,
 		Pause = false,
+		GamePlay = false, // Checks whether the programme is in gameplay state or not
 		disable = false; //để tạm dừng màn hình bên trái
 //============================================================
 
@@ -1793,11 +1795,18 @@ void gameover()
 
 int main() // Main function
 {
-    ArrayReset();
+    // Initialising
+	ArrayReset();
 	Colour(6); // Set default text colour to white
 	khung();
 	NextPiece = Random(18); // Generate the first tetromino
 	NoCursorType(); // Hide console cursor
+
+	// Print Welcome Screen
+	GotoXY(0, 0);
+	welcome();
+	system("cls");
+    khungmenu();
 
 	// Print once
 	GotoXY(67, 1); cout << "X = ";
@@ -1808,7 +1817,113 @@ int main() // Main function
 	GotoXY(67, 6); cout << "Rot = ";
 	GotoXY(67, 7); cout << "State = ";
 
-	while (1) // Infinite loop (or game loop, technically)
+	while(1)
+    {
+        if(kbhit())
+        {
+            key = getch();
+            ASCIIValue = key;
+            if((ASCIIValue == 119)&&(disable == false)) dem--; //coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
+            if((ASCIIValue == 115)&&(disable == false)) dem++;
+            if(ASCIIValue == 13) disable = true;
+            if(ASCIIValue == 27) disable = false;
+            if(dem < 1) //chặn highlight nếu như đã ở trên cùng mà vẫn bấm nút lên
+            {
+                dem = 1;
+                continue;
+            }
+            if(dem > 4) // chặn highlight nếu như đã ở dưới cùng mà vẫn bấm nút xuống
+            {
+                dem = 4;
+                continue;
+            }
+            if(dem == 1)
+            {
+                khungmenu1(); //highlight chữ New game
+                //link phần của ông vào đây :3
+				if (ASCIIValue == 13)
+					while (1) // Infinite loop (or game loop, technically)
+					{
+						if (kbhit()) // Function that checks keys are pressed or not
+						{
+							key = getche();
+							ASCIIValue = key;
+							// Statements process user's input
+							if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
+							InputProcess();
+						}
+
+						// Statement checks whether a new tetromino should be generated
+						if (NewTetromino && !Pause)
+						{
+							tetrominoLocX = Random(16) + 2;
+							tetrominoLocY = 1;
+							colour = Random(5) + 1;
+							CurrentState = NextPiece;
+							NextPiece = Random(18);
+							Score += CheckFullRow() * 5;
+							NewTetromino = false;
+
+							ArrayDebug();
+							GotoXY(0, 0);
+							khung();
+							Refresh();
+
+							// Print score
+							GotoXY(23, 12);
+							cout << "Your Score: " << Score;
+
+							//Print next piece
+							GotoXY(27, 2);
+							cout << "Next piece";
+							PrintNextPiece(30, 4);
+						}
+		
+						// Statement controls the dropping speed of tetrominoes
+						// The bigger the value, the slower the tetrominoes will drop
+						if (DelayTime == 10000 && !Pause)
+						{
+							tetrominoLocY++;
+							DelayTime = 0;
+			
+							Refresh();
+						}
+						else if (!Pause) DelayTime++;
+
+						//Statement ends the current game
+						for (int i = 1; i <= 20; i++) 
+							if (tetris[i][2] != 0)
+							{
+								ArrayReset();
+								PrintArray(1, 1);
+								Score = 0;
+								NewTetromino = true;
+							}
+
+						GotoXY(13, 22); // Move console cursor to "Key pressed: " position
+					}
+            }
+            if(dem == 2)
+            {
+                khungmenu2(); //highlight chữ Help
+                if(ASCIIValue == 13) help(); // nhảy vô giao diện help
+         //       if(ASCIIValue == 27) disable == false; //thoát giao diện help
+            }
+            if(dem == 3)
+            {
+                khungmenu3(); //highlight chữ Credit
+                if(ASCIIValue == 13) credit(); //nhảy vô giao diện credit
+          //      if(ASCIIValue == 27) disable == false; //thoát giao diện credit
+            }
+            if(dem == 4)
+            {
+                khungmenu4(); //highlight chữ Exit
+                if(ASCIIValue == 13) break; //thoát khỏi game
+            }
+        }
+    }
+
+	/* while (1) // Infinite loop (or game loop, technically)
     {
 		if (kbhit()) // Function that checks keys are pressed or not
 		{
@@ -1867,6 +1982,6 @@ int main() // Main function
 			}
 
 		GotoXY(13, 22); // Move console cursor to "Key pressed: " position
-	}
+	} */
 	//cin.get();
 }
