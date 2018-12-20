@@ -1606,7 +1606,7 @@ void credit()
     GotoXY(22,7); cout << "IT001.J13.MTCL - VN";
     GotoXY(22,9); cout << "Programer:";
     GotoXY(22,10); cout << "Ho Hai Cong Thuan";
-    GotoXY(22,11); cout << "ID: ";
+    GotoXY(22,11); cout << "ID: 18521469";
     GotoXY(22,12); cout << "Ha Kieu Trang";
     GotoXY(22,13); cout << "ID: 18521522";
     GotoXY (22,19); cout << "*Press Esc to";
@@ -1910,7 +1910,17 @@ int main() // Main function
 					}
 					
 					system("cls");
-					khungmenu();
+					khung();
+					GotoXY(7,6);
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+					cout << "New game";
+					GotoXY(7,9);
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
+					cout << "Help";
+					GotoXY(7,12);
+					cout << "Credit";
+					GotoXY(7,15);
+					cout << "Exit";
 				}
             }
             if(dem == 2)
@@ -1933,65 +1943,5 @@ int main() // Main function
         }
     }
 
-	/* while (1) // Infinite loop (or game loop, technically)
-    {
-		if (kbhit()) // Function that checks keys are pressed or not
-		{
-			key = getche();
-			ASCIIValue = key;
-			// Statements process user's input
-			if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
-			InputProcess();
-		}
-
-		// Statement checks whether a new tetromino should be generated
-		if (NewTetromino && !Pause)
-		{
-			tetrominoLocX = Random(16) + 2;
-			tetrominoLocY = 1;
-			colour = Random(5) + 1;
-			CurrentState = NextPiece;
-			NextPiece = Random(18);
-			Score += CheckFullRow() * 5;
-			NewTetromino = false;
-
-			ArrayDebug();
-			GotoXY(0, 0);
-			khung();
-			Refresh();
-
-			// Print score
-			GotoXY(23, 12);
-			cout << "Your Score: " << Score;
-
-			//Print next piece
-			GotoXY(27, 2);
-			cout << "Next piece";
-			PrintNextPiece(30, 4);
-		}
-		
-		// Statement controls the dropping speed of tetrominoes
-		// The bigger the value, the slower the tetrominoes will drop
-		if (DelayTime == 10000 && !Pause)
-		{
-			tetrominoLocY++;
-			DelayTime = 0;
-			
-			Refresh();
-		}
-		else if (!Pause) DelayTime++;
-
-		//Statement ends the current game
-		for (int i = 1; i <= 20; i++) 
-			if (tetris[i][2] != 0)
-			{
-				ArrayReset();
-				PrintArray(1, 1);
-				Score = 0;
-				NewTetromino = true;
-			}
-
-		GotoXY(13, 22); // Move console cursor to "Key pressed: " position
-	} */
 	//cin.get();
 }
