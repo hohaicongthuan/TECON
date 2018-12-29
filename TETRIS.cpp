@@ -23,7 +23,8 @@ int	Score = 0, HighScore = 0,
 	DelayTime = 1, count = 0,
 	ASCIIValue,
 	dem = 1,
-	Level = 1;
+	Level = 1,
+	FallingSpeed = 10000;
 
 unsigned short int	CurrentState = 0,
 					NextPiece = 0,
@@ -1223,6 +1224,21 @@ void Refresh()
 	cout << "Key pressed: ";
 
 	PrintVariables();
+
+	// Print score
+	GotoXY(35, 12);
+	cout << Score;
+
+	//Print next piece
+	GotoXY(27, 3); cout << "       ";
+	GotoXY(27, 4); cout << "       ";
+	GotoXY(27, 5); cout << "       ";
+	GotoXY(27, 6); cout << "       ";
+	GotoXY(27, 7); cout << "       ";
+	PrintNextPiece(30, 4);
+
+	GotoXY(30, 10);
+	cout << Level;
 }
 
 void InputProcess() // Function processing user's input
@@ -1308,37 +1324,35 @@ void Colour(int n) // Function that changes console text colour
 
 void khung()
 {
-    // system("cls");
-    // hàng đầu tiên
-    // SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN  | FOREGROUND_INTENSITY);
-    cout << char(201);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(203);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(187) << endl;
-
-    //hàng thứ 2 đến hàng thứ 19
-    for(int j = 1; j <= 20; ++j)
-    {
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186);
-        for(int i = 1; i <= 20; ++i)
-            cout << " ";
-        cout << char(186) << endl;
-    }
-
-    //hàng cuối cùng
-    cout << char(200);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(202);
-    for(int i = 1; i <= 20; ++i)
-        cout << char(205);
-    cout << char(188) << endl;
+    GotoXY(0,0);
+	
+	//Draw first row
+	for(int i = 1; i <= 42; i++)
+	{
+		GotoXY(i, 0);
+		cout << char(205);
+	}
+	GotoXY(0, 0); cout << char(201);
+	GotoXY(43, 0); cout << char(187);
+	GotoXY(21, 0); cout << char(203);
+	
+	//Draw next 20 rows
+	for(int i = 1; i <= 20; i++)
+	{
+		GotoXY(0, i); cout << char(186);
+		GotoXY(21, i); cout << char(186);
+		GotoXY(43, i); cout << char(186);
+	}
+	
+	//Draw last row
+	for(int i = 1; i <= 42; i++)
+	{
+		GotoXY(i, 21);
+		cout << char(205);
+	}
+	GotoXY(0, 21); cout << char(200);
+	GotoXY(43, 21); cout << char(188);
+	GotoXY(21, 21); cout << char(202);
 }
 
 void xoakhungbenphai()
@@ -1820,12 +1834,12 @@ int main() // Main function
             if(dem < 1) //chặn highlight nếu như đã ở trên cùng mà vẫn bấm nút lên
             {
                 dem = 1;
-                continue;
+                //continue;
             }
             if(dem > 4) // chặn highlight nếu như đã ở dưới cùng mà vẫn bấm nút xuống
             {
                 dem = 4;
-                continue;
+                //continue;
             }
             if(dem == 1)
             {
@@ -1837,6 +1851,7 @@ int main() // Main function
 					ArrayReset();
 					Colour(6); // Set default text colour to white
 					NextPiece = Random(18); // Generate the first tetromino
+					Level = 1;
 					
 					// Print once
 					GotoXY(67, 1); cout << "X = ";
@@ -1846,6 +1861,11 @@ int main() // Main function
 					GotoXY(67, 5); cout << "MoveD = ";
 					GotoXY(67, 6); cout << "Rot = ";
 					GotoXY(67, 7); cout << "State = ";
+					GotoXY(23, 12); cout << "Your Score: ";
+					GotoXY(27, 2); cout << "Next piece";
+					GotoXY(23, 18); cout << "Spacebar to pause";
+					GotoXY(23, 20); cout << "ESC to exit";
+					GotoXY(23, 10); cout << "Level: ";
 					
 					while (1) // Infinite loop (or game loop, technically)
 					{
@@ -1875,18 +1895,32 @@ int main() // Main function
 							Refresh();
 
 							// Print score
-							GotoXY(23, 12);
-							cout << "Your Score: " << Score;
+							GotoXY(35, 12);
+							cout << Score;
 
 							//Print next piece
-							GotoXY(27, 2);
-							cout << "Next piece";
+							GotoXY(27, 3); cout << "       ";
+							GotoXY(27, 4); cout << "       ";
+							GotoXY(27, 5); cout << "       ";
+							GotoXY(27, 6); cout << "       ";
+							GotoXY(27, 7); cout << "       ";
 							PrintNextPiece(30, 4);
+
+							GotoXY(30, 10);
+							cout << Level;
+
+							//Statement increases level
+							if (Score % 10 == 0 && Score > 0 && CheckFullRow() != 0)
+							{
+								Level++;
+								FallingSpeed -= 20;
+							}
+
 						}
 		
 						// Statement controls the dropping speed of tetrominoes
 						// The bigger the value, the slower the tetrominoes will drop
-						if (DelayTime == 10000 && !Pause)
+						if (DelayTime == FallingSpeed && !Pause)
 						{
 							tetrominoLocY++;
 							DelayTime = 0;
@@ -1902,6 +1936,7 @@ int main() // Main function
 								ArrayReset();
 								PrintArray(1, 1);
 								Score = 0;
+								Level = 1;
 								NextPiece = Random(18);
 								NewTetromino = true;
 							}
@@ -1922,6 +1957,7 @@ int main() // Main function
 					GotoXY(7,15);
 					cout << "Exit";
 				}
+				continue;
             }
             if(dem == 2)
             {
