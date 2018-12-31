@@ -52,6 +52,7 @@ bool	NewTetromino = true,
 		CanMoveDown = true,
 		CanRotate = true,
 		Pause = false,
+		fullrow = false,
 		GamePlay = false, // Checks whether the programme is in gameplay state or not
 		disable = false; //để tạm dừng màn hình bên trái
 //============================================================
@@ -1173,6 +1174,7 @@ int CheckFullRow() // Function that checks and returns a number of full rows
 {
     int FullRow = 0;
 	bool t = false;
+	fullrow = false;
     for (int i = 1; i <= 21; i++)
 	{
 		for (int j = 1; j <= 21; j++)
@@ -1180,9 +1182,11 @@ int CheckFullRow() // Function that checks and returns a number of full rows
 			if (tetris[j][i] == 0) 
 			{
 				t = false;
+				fullrow = t;
 				break;
 			}
 			t = true;
+			fullrow = t;
 		}
 		if (t)
 		{
@@ -1321,6 +1325,7 @@ void Colour(int n) // Function that changes console text colour
 
 //============================================================
 //User Interface
+// This part was written by Trang Ha Kieu
 
 void khung()
 {
@@ -1910,7 +1915,7 @@ int main() // Main function
 							cout << Level;
 
 							//Statement increases level
-							if (Score % 10 == 0 && Score > 0 && CheckFullRow() != 0)
+							if (Score % 10 == 0 && Score > 0 && fullrow)
 							{
 								Level++;
 								FallingSpeed -= 20;
