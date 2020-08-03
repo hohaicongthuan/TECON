@@ -1,0 +1,4 @@
+﻿  TETRIS.cpp
+C:\Users\Ho Hai Cong Thuan\Downloads\TETRIS\TETRIS\scr\TETRIS.h(1079,13): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\Ho Hai Cong Thuan\Downloads\TETRIS\TETRIS\scr\TETRIS.h(1079,16): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+  TETRIS.vcxproj -> C:\Users\Ho Hai Cong Thuan\Downloads\TETRIS\Debug\TETRIS.exe
