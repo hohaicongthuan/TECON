@@ -4,7 +4,7 @@ Note: This project is incomplete. It's playable but some functions don't work as
 
 A project homework in a university class. I'm making it in collaboration with my friend, Trang Ha Kieu.
 
-It is recommended to set the sizes of the console window to 83 x 29 to have the best displaying. Also, the characters' size to 8 x 12.
+It is recommended to set the size of the console window to 83 x 29 to have the best displaying. Also, the characters' size to 8 x 12.
 
 ![alt text](https://user-images.githubusercontent.com/20926690/49714455-7643c880-fc7f-11e8-8c6d-cca864867a58.PNG)
 
