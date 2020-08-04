@@ -26,29 +26,29 @@ int main() // Main function
             key = _getch();
             ASCIIValue = key;
 			//coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
-            if (ASCIIValue == 119 && disable == false) dem--; 
-            if (ASCIIValue == 115 && disable == false) dem++;
-            if (ASCIIValue == 13) disable = true;
-            if (ASCIIValue == 27) 
+            if (isUpKey(ASCIIValue) && disable == false) dem--; 
+            if (isDownKey(ASCIIValue) && disable == false) dem++;
+            if (isSelectKey(ASCIIValue)) disable = true;
+            if (ASCIIValue == KEY_ESC) 
 			{
 				disable = false;
 				xoakhungbenphai();
 			}
             if(dem < 1) //chặn highlight nếu như đã ở trên cùng mà vẫn bấm nút lên
             {
-                dem = 1;
+                dem = 4;
                 //continue;
             }
             if(dem > 4) // chặn highlight nếu như đã ở dưới cùng mà vẫn bấm nút xuống
             {
-                dem = 4;
+                dem = 1;
                 //continue;
             }
             if(dem == 1)
             {
                 khungmenu1(); //highlight chữ New game
                 //link phần của ông vào đây :3
-				if (ASCIIValue == 13)
+				if (isSelectKey(ASCIIValue))
 				{
 					// Initialising
 					ArrayReset();
@@ -77,7 +77,7 @@ int main() // Main function
 							key = _getche();
 							ASCIIValue = key;
 							// Statements process user's input
-							if (ASCIIValue == 27) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
+							if (ASCIIValue == KEY_ESC) break; // Exit infinite loop when ESC key (ASCII value is 27) is pressed
 							InputProcess();
 						}
 
@@ -166,19 +166,19 @@ int main() // Main function
             if(dem == 2)
             {
                 khungmenu2(); //highlight chữ Help
-                if(ASCIIValue == 13) help(); // nhảy vô giao diện help
+                if(isSelectKey(ASCIIValue)) help(); // nhảy vô giao diện help
          //       if(ASCIIValue == 27) disable == false; //thoát giao diện help
             }
             if(dem == 3)
             {
                 khungmenu3(); //highlight chữ Credit
-                if(ASCIIValue == 13) credit(); //nhảy vô giao diện credit
+                if(isSelectKey(ASCIIValue)) credit(); //nhảy vô giao diện credit
           //      if(ASCIIValue == 27) disable == false; //thoát giao diện credit
             }
             if(dem == 4)
             {
                 khungmenu4(); //highlight chữ Exit
-                if(ASCIIValue == 13) break; //thoát khỏi game
+                if(isSelectKey(ASCIIValue)) break; //thoát khỏi game
             }
         }
     }

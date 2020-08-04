@@ -1,8 +1,4 @@
 ﻿  TETRIS.cpp
-C:\GitHub\TETRIS\TETRIS\scr\TETRIS.h(1087,13): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-C:\GitHub\TETRIS\TETRIS\scr\TETRIS.h(1087,16): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-C:\GitHub\TETRIS\TETRIS\scr\TETRIS.cpp(29,16): warning C4806: '|': unsafe operation: no value of type 'bool' promoted to type 'int' can equal the given constant
-C:\GitHub\TETRIS\TETRIS\scr\TETRIS.cpp(29,16): warning C4554: '|': check operator precedence for possible error; use parentheses to clarify precedence
-C:\GitHub\TETRIS\TETRIS\scr\TETRIS.cpp(30,16): warning C4806: '|': unsafe operation: no value of type 'bool' promoted to type 'int' can equal the given constant
-C:\GitHub\TETRIS\TETRIS\scr\TETRIS.cpp(30,16): warning C4554: '|': check operator precedence for possible error; use parentheses to clarify precedence
+C:\GitHub\TETRIS\TETRIS\scr\TETRIS.h(1151,13): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\GitHub\TETRIS\TETRIS\scr\TETRIS.h(1151,16): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
   TETRIS.vcxproj -> C:\GitHub\TETRIS\x64\Debug\TETRIS.exe

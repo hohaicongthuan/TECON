@@ -9,16 +9,19 @@
 #include <cstdlib>
 #include <ctime>
 #include <conio.h>
+#include <iterator>
 
 using namespace std;
 
 //============================================================
+// Define keys input here
 
-#define	KEY_UP		72 | 119
-#define KEY_DOWN	80 | 115
-#define KEY_LEFT	75//, 97
-#define KEY_RIGHT	77//, 100
-#define KEY_ESC		27
+#define		KEY_ESC		27
+const int	KEY_UP[] = { 72, 119 };
+const int	KEY_DOWN[] = { 80, 115 };
+const int	KEY_LEFT[] = { 75, 97 };
+const int	KEY_RIGHT[] = { 77, 100 };
+const int	KEY_SELECT[] = { 13, 102 };
 
 //============================================================
 
@@ -97,6 +100,17 @@ void BlockS2(int x, int y);		void BlockT1(int x, int y);
 void BlockT2(int x, int y);		void BlockT3(int x, int y);
 void BlockT4(int x, int y);		void BlockZ1(int x, int y);
 void BlockZ2(int x, int y);
+
+// Checks if a given x is in KEY_UP[]
+bool isUpKey(int x);
+// Checks if a given x is in KEY_DOWN[]
+bool isDownKey(int x);
+// Checks if a given x is in KEY_LEFT[]
+bool isLeftKey(int x);
+// Checks if a given x is in KEY_RIGHT[]
+bool isRightKey(int x);
+// Checks if a given x is in KEY_SELECT[]
+bool isSelectKey(int x);
 
 void PrintTetromino();
 void PrintNextPiece(int x, int y);
@@ -1074,6 +1088,56 @@ void PrintNextPiece(int x, int y)
 }
 
 //=============================================================
+
+bool isUpKey(int x) {
+	auto ArraySize = size(KEY_UP);
+	
+	for (int i = 0; i < ArraySize; i++) {
+		if (KEY_UP[i] == x) return true;
+	}
+
+	return false;
+}
+
+bool isDownKey(int x) {
+	auto ArraySize = size(KEY_DOWN);
+
+	for (int i = 0; i < ArraySize; i++) {
+		if (KEY_DOWN[i] == x) return true;
+	}
+
+	return false;
+}
+
+bool isLeftKey(int x) {
+	auto ArraySize = size(KEY_LEFT);
+
+	for (int i = 0; i < ArraySize; i++) {
+		if (KEY_LEFT[i] == x) return true;
+	}
+
+	return false;
+}
+
+bool isRightKey(int x) {
+	auto ArraySize = size(KEY_RIGHT);
+
+	for (int i = 0; i < ArraySize; i++) {
+		if (KEY_RIGHT[i] == x) return true;
+	}
+
+	return false;
+}
+
+bool isSelectKey(int x) {
+	auto ArraySize = size(KEY_SELECT);
+
+	for (int i = 0; i < ArraySize; i++) {
+		if (KEY_SELECT[i] == x) return true;
+	}
+
+	return false;
+}
 
 int Random(int n) // Generate a random number
 {
