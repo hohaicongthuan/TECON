@@ -25,10 +25,11 @@ int main() // Main function
         {
             key = _getch();
             ASCIIValue = key;
-            if(ASCIIValue == 119 && disable == false) dem--; //coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
-            if(ASCIIValue == 115 && disable == false) dem++;
-            if(ASCIIValue == 13) disable = true;
-            if(ASCIIValue == 27) 
+			//coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
+            if (ASCIIValue == 119 && disable == false) dem--; 
+            if (ASCIIValue == 115 && disable == false) dem++;
+            if (ASCIIValue == 13) disable = true;
+            if (ASCIIValue == 27) 
 			{
 				disable = false;
 				xoakhungbenphai();

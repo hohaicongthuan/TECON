@@ -14,6 +14,14 @@ using namespace std;
 
 //============================================================
 
+#define	KEY_UP		72 | 119
+#define KEY_DOWN	80 | 115
+#define KEY_LEFT	75//, 97
+#define KEY_RIGHT	77//, 100
+#define KEY_ESC		27
+
+//============================================================
+
 int tetris[30][30]; // Khai báo mảng
 
 int	Score = 0, HighScore = 0,
