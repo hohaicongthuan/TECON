@@ -1,4 +1,4 @@
-// TETRIS GAME BY CONG THUAN HO HAI & KIEU TRANG HA
+// TETRIS GAME BY THUAN HAI CONG HO & TRANG KIEU HA
 // Well's size (Matrix size) 20 x 20
 // 100% console interface
 
@@ -1317,17 +1317,17 @@ void Refresh()
 
 void InputProcess() // Function processing user's input
 {
-	if (ASCIIValue == 97 && !Pause) // Moves current tetromino to the left if the 'a' key is pressed
+	if (isLeftKey(ASCIIValue) && !Pause) // Moves current tetromino to the left if the 'a' key is pressed
 	{
 		if (CanMoveLeft) tetrominoLocX--;
 		Refresh();
 	}
-	if (ASCIIValue == 100 && !Pause) // Moves current tetromino to the right if the 'd' key is pressed
+	if (isRightKey(ASCIIValue) && !Pause) // Moves current tetromino to the right if the 'd' key is pressed
 	{
 		if (CanMoveRight) tetrominoLocX++;
 		Refresh();
 	}
-	if (ASCIIValue == 115 && !Pause) // Moves current tetromino down if the 's' key is pressed
+	if (isDownKey(ASCIIValue) && !Pause) // Moves current tetromino down if the 's' key is pressed
 	{
 		if (CanMoveDown) if (tetrominoLocY < 20) tetrominoLocY++;
 		Refresh();
@@ -1347,7 +1347,7 @@ void InputProcess() // Function processing user's input
 				cout << "Paused"; // Print "Paused" text out
 				GotoXY(13, 22); // Move console cursor to "Key pressed: " position
 			}
-	if (ASCIIValue == 119 && !Pause) // Change state of a tetromino when 'w' key is pressed
+	if (isUpKey(ASCIIValue) && !Pause) // Change state of a tetromino when 'w' key is pressed
 	{
 		if (CanRotate)
 			switch (CurrentState)
@@ -1702,7 +1702,9 @@ void credit()
     GotoXY (22,20); cout << "control menu";
 }
 
-void gameover()
+// Unused function
+
+/* void gameover()
 {
     //vẽ khung
     //hàng đầu tiên
@@ -1878,4 +1880,4 @@ void gameover()
     //R
     cout << char(192) << char(192) << char(196) << char(217);
 
-}
+} */

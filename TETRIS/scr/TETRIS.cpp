@@ -132,10 +132,18 @@ int main() // Main function
 						}
 						else if (!Pause) DelayTime++;
 
-						//Statement ends the current game
+						// Statement ends the current game
+						// A.K.A "GAME OVER"
 						for (int i = 1; i <= 20; i++) 
 							if (tetris[i][2] != 0)
 							{
+								// Print "Game Over"
+								GotoXY(27, 15);
+								cout << "Game Over"; 
+								_getch();
+								GotoXY(27, 15);
+								// Delete "Game Over"
+								cout << "         ";
 								ArrayReset();
 								PrintArray(1, 1);
 								Score = 0;
