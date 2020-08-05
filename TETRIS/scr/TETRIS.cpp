@@ -36,12 +36,12 @@ int main() // Main function
 			}
             if(dem < 1) //chặn highlight nếu như đã ở trên cùng mà vẫn bấm nút lên
             {
-                dem = 4;
+                dem = 1;
                 //continue;
             }
             if(dem > 4) // chặn highlight nếu như đã ở dưới cùng mà vẫn bấm nút xuống
             {
-                dem = 1;
+                dem = 4;
                 //continue;
             }
             if(dem == 1)
