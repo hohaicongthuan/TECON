@@ -1,6 +1,6 @@
 # TETRIS
 
-Note: This project is incomplete. It's playable but some functions don't work as expected.
+__*Note: This project is incomplete. It's playable but some functions don't work as expected.*__
 
 A project homework in a university class. I'm making it in collaboration with my friend, @AcezukyRO.
 
