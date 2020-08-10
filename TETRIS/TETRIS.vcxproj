@@ -20,9 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\TETRIS.h" />
+    <ClInclude Include="scr\Tetromino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="scr\main.cpp" />
     <ClCompile Include="scr\TETRIS.cpp" />
+    <ClCompile Include="scr\Tetromino.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -18,9 +18,18 @@
     <ClInclude Include="scr\TETRIS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scr\Tetromino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scr\TETRIS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Tetromino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

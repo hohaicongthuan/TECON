@@ -5,3 +5,7 @@
 .vs/TETRIS/v16/Browse.VC.db-wal
 .vs/TETRIS/v16/Browse.VC.opendb
 .vs/TETRIS/v16/ipch/AutoPCH/f2c2b357146bc9bf/TETRIS.ipch
+.vs/**
+x64/**
+TETRIS/x64/**
+TETRIS/Debug/**
