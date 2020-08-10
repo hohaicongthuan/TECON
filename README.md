@@ -2,7 +2,7 @@
 
 Note: This project is incomplete. It's playable but some functions don't work as expected.
 
-A project homework in a university class. I'm making it in collaboration with my friend, Trang Ha Kieu.
+A project homework in a university class. I'm making it in collaboration with my friend, @AcezukyRO.
 
 It is recommended to set the size of the console window to 83 x 29 to have the best displaying. Also, the characters' size to 8 x 12.
 
