@@ -21,6 +21,9 @@
     <ClInclude Include="scr\Tetromino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scr\UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scr\TETRIS.cpp">
@@ -30,6 +33,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="scr\Tetromino.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

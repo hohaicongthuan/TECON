@@ -19,13 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\TETRIS.h" />
-    <ClInclude Include="scr\Tetromino.h" />
+    <ClInclude Include="src\TETRIS.h" />
+    <ClInclude Include="src\Tetromino.h" />
+    <ClInclude Include="src\UI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scr\main.cpp" />
-    <ClCompile Include="scr\TETRIS.cpp" />
-    <ClCompile Include="scr\Tetromino.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\TETRIS.cpp" />
+    <ClCompile Include="src\Tetromino.cpp" />
+    <ClCompile Include="src\UI.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

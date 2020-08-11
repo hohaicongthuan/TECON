@@ -8,4 +8,8 @@
 .vs/**
 x64/**
 TETRIS/x64/**
+TETRIS/x64/Debug/**
+TETRIS/x64/Release/**
+TETRIS/x64/Debug/**
+TETRIS/x64/Release/**
 TETRIS/Debug/**
