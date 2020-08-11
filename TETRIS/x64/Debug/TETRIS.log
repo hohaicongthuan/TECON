@@ -1,7 +1,0 @@
-﻿  main.cpp
-  TETRIS.cpp
-C:\GitHub\TETRIS\TETRIS\scr\TETRIS.cpp(123,17): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-C:\GitHub\TETRIS\TETRIS\scr\TETRIS.cpp(123,20): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-  Tetromino.cpp
-  Generating Code...
-  TETRIS.vcxproj -> C:\GitHub\TETRIS\x64\Debug\TETRIS.exe
