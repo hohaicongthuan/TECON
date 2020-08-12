@@ -15,27 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scr\TETRIS.h">
+    <ClInclude Include="src\TETRIS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="scr\Tetromino.h">
+    <ClInclude Include="src\Tetromino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="scr\UI.h">
+    <ClInclude Include="src\UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scr\TETRIS.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scr\main.cpp">
+    <ClCompile Include="src\TETRIS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scr\Tetromino.cpp">
+    <ClCompile Include="src\Tetromino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="scr\UI.cpp">
+    <ClCompile Include="src\UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

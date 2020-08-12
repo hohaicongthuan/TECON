@@ -18,7 +18,7 @@ using namespace std;
 //============================================================
 // "extern" keyword is used to avoid multiple definitions
 // it makes variables visible to other source files that want
-// to use those but variables are only defined in one place
+// to use them but variables are only defined in one place
 // In this case, these variables are defined in TETRIS.cpp
 
 extern const int	KEY_ESC;

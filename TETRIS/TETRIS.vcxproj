@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameSave.h" />
     <ClInclude Include="src\TETRIS.h" />
     <ClInclude Include="src\Tetromino.h" />
     <ClInclude Include="src\UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameSave.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\TETRIS.cpp" />
     <ClCompile Include="src\Tetromino.cpp" />
