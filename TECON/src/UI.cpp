@@ -1,5 +1,9 @@
-﻿#include "UI.h"
-#include "TETRIS.h"
+﻿// TECON GAME (Tetris clone) BY THUAN HAI CONG HO & TRANG KIEU HA
+// Well's size (Matrix size) 20 x 20
+// 100% ASCII interface
+
+#include "UI.h"
+#include "TECON.h"
 
 // User Interface
 // This part was written by Trang Ha Kieu
@@ -309,7 +313,7 @@ void credit()
     GotoXY(22, 20); cout << "control menu";
 }
 
-// Unused function
+// UNUSED
 
 /* void gameover()
 {

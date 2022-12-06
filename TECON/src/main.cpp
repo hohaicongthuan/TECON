@@ -1,8 +1,12 @@
-﻿#include "TETRIS.h"
-#include "Tetromino.h"
+﻿// TECON GAME (Tetris clone) BY THUAN HAI CONG HO & TRANG KIEU HA
+// Well's size (Matrix size) 20 x 20
+// 100% ASCII interface
+
+#include "TECON.h"
+#include "Teconny.h"
 #include "UI.h"
 
-int main() // Main function
+int main()
 {
 	NoCursorType(); // Hide console cursor
 
@@ -18,7 +22,6 @@ int main() // Main function
 		{
 			key = _getch();
 			ASCIIValue = key;
-			//coi mỗi giao diện là 1 con số, thay đổi con số là thay đổi giao diện
 			if (isUpKey(ASCIIValue) && disable == false) dem--;
 			if (isDownKey(ASCIIValue) && disable == false) dem++;
 			if (isSelectKey(ASCIIValue)) disable = true;
@@ -39,8 +42,7 @@ int main() // Main function
 			}
 			if (dem == 1)
 			{
-				khungmenu1(); //highlight chữ New game
-				//link phần của ông vào đây :3
+				khungmenu1(); // highlight chữ New game
 				if (isSelectKey(ASCIIValue))
 				{
 					// Initialising
@@ -75,15 +77,15 @@ int main() // Main function
 						}
 
 						// Statement checks whether a new tetromino should be generated
-						if (NewTetromino && !Pause)
+						if (NewTeconny && !Pause)
 						{
-							tetrominoLocX = Random(16) + 2;
-							tetrominoLocY = 1;
+							teconnyLocX = Random(16) + 2;
+							teconnyLocY = 1;
 							colour = Random(5) + 1;
 							CurrentState = NextPiece;
 							NextPiece = Random(18);
 							Score += CheckFullRow() * 5;
-							NewTetromino = false;
+							NewTeconny = false;
 
 							ArrayDebug();
 							GotoXY(0, 0);
@@ -118,7 +120,7 @@ int main() // Main function
 						// The bigger the value, the slower the tetrominoes will drop
 						if (DelayTime == FallingSpeed && !Pause)
 						{
-							tetrominoLocY++;
+							teconnyLocY++;
 							DelayTime = 0;
 
 							Refresh();
@@ -128,7 +130,7 @@ int main() // Main function
 						// Statement ends the current game
 						// A.K.A "GAME OVER"
 						for (int i = 1; i <= 20; i++)
-							if (tetris[i][2] != 0)
+							if (tecon[i][2] != 0)
 							{
 								// Print "Game Over"
 								GotoXY(27, 15);
@@ -142,7 +144,7 @@ int main() // Main function
 								Score = 0;
 								Level = 1;
 								NextPiece = Random(18);
-								NewTetromino = true;
+								NewTeconny = true;
 							}
 
 						GotoXY(13, 22); // Move console cursor to "Key pressed: " position

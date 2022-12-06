@@ -1,6 +1,6 @@
-// TETRIS GAME BY THUAN HAI CONG HO & TRANG KIEU HA
+// TECON GAME (Tetris clone) BY THUAN HAI CONG HO & TRANG KIEU HA
 // Well's size (Matrix size) 20 x 20
-// 100% console interface
+// 100% ASCII interface
 
 //============================================================
 
@@ -28,10 +28,10 @@ extern const int	KEY_LEFT[];
 extern const int	KEY_RIGHT[];
 extern const int	KEY_SELECT[];
 
-extern int tetris[30][30]; // Khai báo mảng
+extern int tecon[30][30]; // Khai báo mảng
 
 extern int  Score, HighScore,
-            tetrominoLocX, tetrominoLocY, // Tetromino Location X & Y
+            teconnyLocX, teconnyLocY, // Teconny Location X & Y
             DelayTime, count,
             ASCIIValue,
             dem,
@@ -42,7 +42,7 @@ extern unsigned short int	CurrentState,
                             NextPiece,
                             colour;
 
-// Quy ước các trạng thái của tetrominoes
+// Quy ước các trạng thái của teconny
 // Vì "switch... case" không hỗ trợ dữ liệu chuỗi
 // nên đành phải quy ước thành số nguyên
 
@@ -58,7 +58,7 @@ extern unsigned short int	CurrentState,
 
 extern char key; // Stores keys that user pressed
 
-extern bool	NewTetromino,
+extern bool	NewTeconny,
             CanMoveRight,
             CanMoveLeft,
             CanMoveDown,
@@ -66,11 +66,12 @@ extern bool	NewTetromino,
             Pause,
             fullrow,
             GamePlay, // Checks whether the programme is in gameplay state or not
-            disable; //để tạm dừng màn hình bên trái
+            disable; // để tạm dừng màn hình bên trái
 
 
-// Functions define
 int Random(int n);
+int CheckFullRow();
+
 void Colour(int n);
 void GotoXY(int x, int y);
 void NoCursorType();
@@ -79,20 +80,12 @@ void PrintArray(int x, int y);
 void ArrayDebug();
 void DeleteRow(int n);
 void MoveAllRowAbove(int n);
-int CheckFullRow();
-void PrintVariables();
-
-// Checks if a given x is in KEY_UP[]
-bool isUpKey(int x);
-// Checks if a given x is in KEY_DOWN[]
-bool isDownKey(int x);
-// Checks if a given x is in KEY_LEFT[]
-bool isLeftKey(int x);
-// Checks if a given x is in KEY_RIGHT[]
-bool isRightKey(int x);
-// Checks if a given x is in KEY_SELECT[]
-bool isSelectKey(int x);
-
 void Refresh();
 void InputProcess();
+void PrintVariables();
 
+bool isUpKey(int x);
+bool isDownKey(int x);
+bool isLeftKey(int x);
+bool isRightKey(int x);
+bool isSelectKey(int x);

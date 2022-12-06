@@ -1,11 +1,11 @@
-// TETRIS GAME BY CONG THUAN HO HAI & KIEU TRANG HA
+// TECON GAME (Tetris clone) BY THUAN HAI CONG HO & TRANG KIEU HA
 // Well's size (Matrix size) 20 x 20
-// 100% console interface
+// 100% ASCII interface
 
 //============================================================
 
-#include "TETRIS.h"
-#include "Tetromino.h"
+#include "TECON.h"
+#include "Teconny.h"
 
 //============================================================
 
@@ -19,10 +19,10 @@ const int	KEY_SELECT[] = { 13, 102 };
 
 //============================================================
 
-int tetris[30][30]; // Khai báo mảng
+int tecon[30][30]; // Khai báo mảng
 
 int Score = 0, HighScore = 0,
-    tetrominoLocX = 0, tetrominoLocY = 0, // Tetromino Location X & Y
+    teconnyLocX = 0, teconnyLocY = 0, // Tetromino Location X & Y
     DelayTime = 1, count = 0,
     ASCIIValue,
     dem = 1,
@@ -49,7 +49,7 @@ unsigned short int	CurrentState = 0,
 
 char	key; // Stores keys that user pressed
 
-bool	NewTetromino = true,
+bool	NewTeconny = true,
         CanMoveRight = true,
         CanMoveLeft = true,
         CanMoveDown = true,
@@ -134,15 +134,15 @@ void NoCursorType() // Hàm ẩn con trỏ console
 
 void ArrayReset()
 {
-    for (int i = 0; i <= 30; i++)
-        for (int j = 0; j <= 30; j++)
-            tetris[j][i] = 0;
+    for (int i = 0; i < 30; i++)
+        for (int j = 0; j < 30; j++)
+            tecon[j][i] = 0;
 
     for (int i = 0; i <= 21; i++)
     {
-        tetris[i][22] = 1;
-        tetris[21][i] = 1;
-        tetris[0][i] = 1;
+        tecon[i][22] = 1;
+        tecon[21][i] = 1;
+        tecon[0][i] = 1;
     }
 }
 
@@ -153,7 +153,7 @@ void PrintArray(int x, int y) // In mảng bắt đầu từ vị trí có toạ
     {
         for (int j = 1; j <= 20; j++)
         {
-            switch (tetris[j][i])
+            switch (tecon[j][i])
             {
             case 0: { Colour(0); cout << " "; break; }
             case 1: { Colour(1); cout << char(178); break; }
@@ -176,15 +176,15 @@ void ArrayDebug() // Print the actual array storing information
     for (int i = 0; i <= 22; i++)
     {
         for (int j = 0; j < 22; j++)
-            switch (tetris[j][i])
+            switch (tecon[j][i])
             {
-            case 0: { Colour(6); cout << tetris[j][i]; break; }
-            case 1: { Colour(1); cout << tetris[j][i]; break; }
-            case 2: { Colour(2); cout << tetris[j][i]; break; }
-            case 3: { Colour(3); cout << tetris[j][i]; break; }
-            case 4: { Colour(4); cout << tetris[j][i]; break; }
-            case 5: { Colour(5); cout << tetris[j][i]; break; }
-            case 6: { Colour(6); cout << tetris[j][i]; break; }
+            case 0: { Colour(6); cout << tecon[j][i]; break; }
+            case 1: { Colour(1); cout << tecon[j][i]; break; }
+            case 2: { Colour(2); cout << tecon[j][i]; break; }
+            case 3: { Colour(3); cout << tecon[j][i]; break; }
+            case 4: { Colour(4); cout << tecon[j][i]; break; }
+            case 5: { Colour(5); cout << tecon[j][i]; break; }
+            case 6: { Colour(6); cout << tecon[j][i]; break; }
             }
         Colour(6); // Set the text colour back to white
         GotoXY(44, t++);
@@ -198,7 +198,7 @@ void ArrayDebug() // Print the actual array storing information
 
 void DeleteRow(int n)
 {
-    for (int i = 1; i <= 20; i++) tetris[i][n] = 0;
+    for (int i = 1; i <= 20; i++) tecon[i][n] = 0;
 }
 
 void MoveAllRowAbove(int n)
@@ -207,7 +207,7 @@ void MoveAllRowAbove(int n)
     {
         for (int j = 20; j >= 1; j--)
         {
-            tetris[j][i] = tetris[j][i - 1];
+            tecon[j][i] = tecon[j][i - 1];
         }
     }
 }
@@ -221,7 +221,7 @@ int CheckFullRow() // Function that checks and returns a number of full rows
     {
         for (int j = 1; j <= 21; j++)
         {
-            if (tetris[j][i] == 0)
+            if (tecon[j][i] == 0)
             {
                 t = false;
                 fullrow = t;
@@ -243,9 +243,9 @@ int CheckFullRow() // Function that checks and returns a number of full rows
 void PrintVariables()
 {
     GotoXY(71, 1);
-    cout << tetrominoLocX << " ";
+    cout << teconnyLocX << " ";
     GotoXY(71, 2);
-    cout << tetrominoLocY << " ";
+    cout << teconnyLocY << " ";
     GotoXY(75, 3);
     if (CanMoveRight) cout << "True "; else cout << "False";
     GotoXY(75, 4);
@@ -262,7 +262,7 @@ void Refresh()
 {
     PrintArray(1, 1);
     Colour(colour);
-    PrintTetromino();
+    PrintTeconny();
     Colour(6);
 
     // Print out the key that user pressed
@@ -291,17 +291,17 @@ void InputProcess() // Function processing user's input
 {
     if (isLeftKey(ASCIIValue) && !Pause) // Moves current tetromino to the left if the 'a' key is pressed
     {
-        if (CanMoveLeft) tetrominoLocX--;
+        if (CanMoveLeft) teconnyLocX--;
         Refresh();
     }
     if (isRightKey(ASCIIValue) && !Pause) // Moves current tetromino to the right if the 'd' key is pressed
     {
-        if (CanMoveRight) tetrominoLocX++;
+        if (CanMoveRight) teconnyLocX++;
         Refresh();
     }
     if (isDownKey(ASCIIValue) && !Pause) // Moves current tetromino down if the 's' key is pressed
     {
-        if (CanMoveDown) if (tetrominoLocY < 20) tetrominoLocY++;
+        if (CanMoveDown) if (teconnyLocY < 20) teconnyLocY++;
         Refresh();
     }
     if (ASCIIValue == 32)
