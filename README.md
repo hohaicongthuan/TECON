@@ -14,7 +14,7 @@ This was a homework project from a university class. I'm making it in collaborat
 
 ## HOW TO PLAY?
 
-The code in the repo is just a [Visual Studio](https://visualstudio.microsoft.com/) project that you can open with... well... [Visual Studio](https://visualstudio.microsoft.com/) (Visual Studio Community 2022 will work). Just build and run it, no dependencies are required. Also, I've included some a built binary file in the [`Release`](https://github.com/hohaicongthuan/TETRIS/releases) section so check that out if you don't wanna pull the repo and build it yourself or the project is failed to build.
+The code in the repo is just a [Visual Studio](https://visualstudio.microsoft.com/) project that you can open with... well... [Visual Studio](https://visualstudio.microsoft.com/) (Visual Studio Community 2022 will work). Just build and run it, no dependencies are required. Also, I've included a built binary file in the [`Release`](https://github.com/hohaicongthuan/TETRIS/releases) section so check that out if you don't wanna pull the repo and build it yourself or the project is failed to build.
 
 Use arrow keys to control. <kbd>Space</kbd> to pause, <kbd>F</kbd> to select (if I remember it correctly). <kbd>Escape</kbd> to exit.
 
